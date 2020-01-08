@@ -1,0 +1,11 @@
+[Unit]
+Description=Nextcloud background jobs (service)
+After=nextcloud-compose.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/nextcloud-compose
+ExecStart=/usr/bin/docker-compose exec -d -u www-data webserver php cron.php
+
+[Install]
+WantedBy=multi-user.target
