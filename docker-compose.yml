@@ -10,6 +10,7 @@ services:
       - database.env
     volumes:
       - nextcloud:/var/www/html
+      - nextcloud_config:/var/www/html/config
       - nextcloud_data:/var/www/html/data
     depends_on:
       - database
@@ -41,4 +42,5 @@ volumes:
   cache:
   database:
   nextcloud:
+  nextcloud_config:
   nextcloud_data:
