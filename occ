@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euxo pipefail
-
-docker-compose exec -u www-data webserver php occ $@

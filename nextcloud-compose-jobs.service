@@ -4,8 +4,7 @@ After=nextcloud-compose.service
 
 [Service]
 Type=oneshot
-WorkingDirectory=/opt/nextcloud-compose
-ExecStart=/usr/bin/docker-compose exec -d -u www-data webserver php cron.php
+ExecStart=/opt/nextcloud-compose/nextcloud.sh cron
 
 [Install]
 WantedBy=multi-user.target
