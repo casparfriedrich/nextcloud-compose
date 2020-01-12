@@ -24,7 +24,7 @@ services:
       - database:/var/lib/postgresql/data
 
   cache:
-    image: redis:5.0-alpine
+    image: redis:6.0-rc-alpine
     volumes:
       - cache:/data
 
