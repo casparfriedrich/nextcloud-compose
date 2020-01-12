@@ -13,6 +13,6 @@ case $1 in
 		docker-compose exec -d -u www-data webserver php cron.php
 		;;
 	occ )
-		docker-compose exec -d -u www-data webserver php occ ${@:2}
+		docker-compose exec -u www-data webserver php occ ${@:2}
 		;;
 esac
