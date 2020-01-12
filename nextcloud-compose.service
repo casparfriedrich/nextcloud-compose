@@ -3,6 +3,7 @@ Description=Nextcloud
 After=docker.service
 
 [Service]
+WorkingDirectory=/opt/nextcloud-compose
 ExecStart=/opt/nextcloud-compose/nextcloud.sh up
 ExecStop=/opt/nextcloud-compose/nextcloud.sh down
 Restart=on-failure
