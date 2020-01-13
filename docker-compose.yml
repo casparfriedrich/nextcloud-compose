@@ -15,6 +15,7 @@ services:
     depends_on:
       - database
       - cache
+    restart: on-failure
 
   database:
     image: postgres:12.1-alpine
@@ -22,11 +23,13 @@ services:
       - database.env
     volumes:
       - database:/var/lib/postgresql/data
+    restart: on-failure
 
   cache:
     image: redis:6.0-rc-alpine
     volumes:
       - cache:/data
+    restart: on-failure
 
   proxy:
     image: haproxy:2.1-alpine
@@ -37,6 +40,7 @@ services:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     depends_on:
       - webserver
+    restart: on-failure
 
 volumes:
   cache:

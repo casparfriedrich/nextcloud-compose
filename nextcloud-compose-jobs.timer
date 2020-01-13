@@ -1,5 +1,5 @@
 [Unit]
-Description=Nextcloud background jobs (timer)
+Description=Nextcloud background jobs
 After=nextcloud-compose.service
 
 [Timer]
