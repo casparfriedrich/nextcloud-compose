@@ -48,3 +48,7 @@ volumes:
   nextcloud:
   nextcloud_config:
   nextcloud_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=diskstation"
+      device: ":/volume1/nextcloud"
