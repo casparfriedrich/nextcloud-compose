@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   webserver:
-    image: nextcloud:18.0-rc-apache
+    image: nextcloud:18.0-apache
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
