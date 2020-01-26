@@ -22,7 +22,6 @@ docker-compose up -d # Or use systemd service
 
 - Make sure you can connect via webbrowser (DO NOT FINISH INSTALLATION YET!)
 
-```
 
 - Add the following config lines to `/var/lib/docker/volumes/nextcloud-compose_nextcloud_config/_data/config.php`:
 
