@@ -10,9 +10,9 @@ case $1 in
 		docker-compose down
 		;;
 	cron )
-		docker-compose exec -d -u www-data webserver php cron.php
+		docker-compose exec -d -u www-data nextcloud php cron.php
 		;;
 	occ )
-		docker-compose exec -u www-data webserver php occ ${@:2}
+		docker-compose exec -u www-data nextcloud php occ ${@:2}
 		;;
 esac
