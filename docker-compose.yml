@@ -1,11 +1,13 @@
 version: '3.7'
 
 services:
-  webserver:
+  nextcloud:
     image: nextcloud:18.0-apache
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
+    ports:
+      - "8080:80"
     env_file:
       - database.env
     volumes:
@@ -29,17 +31,6 @@ services:
     image: redis:5.0-alpine
     volumes:
       - cache:/data
-    restart: always
-
-  proxy:
-    image: haproxy:2.1-alpine
-    ports:
-      - "443:443"
-    volumes:
-      - ./combined.pem:/usr/local/etc/haproxy/combined.pem:ro
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
-    depends_on:
-      - webserver
     restart: always
 
 volumes:
