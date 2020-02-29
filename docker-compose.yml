@@ -20,7 +20,7 @@ services:
     restart: always
 
   database:
-    image: postgres:12.1-alpine
+    image: postgres:12.2-alpine
     env_file:
       - database.env
     volumes:
