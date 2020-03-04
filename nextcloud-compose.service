@@ -1,12 +1,16 @@
 [Unit]
 Description=Nextcloud
-After=docker.service
+Requires=docker.service
 
 [Service]
+Type=oneshot
+STAY OPEN
 WorkingDirectory=/opt/nextcloud-compose
-ExecStart=/opt/nextcloud-compose/nextcloud.sh up
-ExecStop=/opt/nextcloud-compose/nextcloud.sh down
-Restart=on-failure
+ExecStart=/opt/nextcloud-compose/nextcloud.sh start
+ExecStop=/opt/nextcloud-compose/nextcloud.sh stop
+ExecRestart=/opt/nextcloud-compose/nextcloud.sh restart
+Restart=always
+DELAY 5 SECONDS
 
 [Install]
 WantedBy=multi-user.target
