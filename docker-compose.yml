@@ -6,8 +6,6 @@ services:
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
-    ports:
-      - "8080:80"
     env_file:
       - database.env
     volumes:
@@ -31,6 +29,16 @@ services:
     image: redis:5.0-alpine
     volumes:
       - cache:/data
+    restart: always
+
+  proxy:
+    image: haproxy:2.2-rc-alpine
+    ports:
+      - "443:443"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - /etc/letsencrypt/home.friedrich.ventures/fullchain.pem:/usr/local/etc/haproxy/fullchain.pem:ro
+      - /etc/letsencrypt/home.friedrich.ventures/privkey.pem.pem:/usr/local/etc/haproxy/privkey.key:ro
     restart: always
 
 volumes:

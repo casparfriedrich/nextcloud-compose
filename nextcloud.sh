@@ -3,11 +3,14 @@
 set -euxo pipefail
 
 case $1 in
-	up )
-		docker-compose up
+	start )
+		docker-compose up -d
 		;;
-	down )
+	stop )
 		docker-compose down
+		;;
+	restart )
+		docker-compose restart
 		;;
 	cron )
 		docker-compose exec -d -u www-data nextcloud php cron.php

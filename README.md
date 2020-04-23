@@ -6,14 +6,6 @@ Personal Nextcloud with docker-compose
 
 - Change the POSTGRES_PASSWORD variable in `database.env`
 
-- Create a file, called `combined.pem`, with the key and certificate concatenated
-
-```bash
-cat <CERTIFICATE> <KEY> > combined.pem
-```
-
-HINT: This will hopefully become obsolete in the future ([more](https://github.com/haproxy/haproxy/issues/221)).
-
 - Start services
 
 ```bash
@@ -21,7 +13,6 @@ docker-compose up -d # Or use systemd service
 ```
 
 - Make sure you can connect via webbrowser (DO NOT FINISH INSTALLATION YET!)
-
 
 - Add the following config lines to `/var/lib/docker/volumes/nextcloud-compose_nextcloud_config/_data/config.php`:
 
