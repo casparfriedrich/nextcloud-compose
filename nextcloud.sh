@@ -9,9 +9,6 @@ case $1 in
 	stop )
 		docker-compose down
 		;;
-	restart )
-		docker-compose restart
-		;;
 	cron )
 		docker-compose exec -d -u www-data nextcloud php cron.php
 		;;

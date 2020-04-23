@@ -4,11 +4,11 @@ Requires=docker.service
 
 [Service]
 Type=oneshot
+RemainAfterExit=true
 WorkingDirectory=/opt/nextcloud-compose
 ExecStart=/opt/nextcloud-compose/nextcloud.sh start
 ExecStop=/opt/nextcloud-compose/nextcloud.sh stop
-ExecRestart=/opt/nextcloud-compose/nextcloud.sh restart
-Restart=always
+Restart=on-failure
 RestartSec=30
 
 [Install]
