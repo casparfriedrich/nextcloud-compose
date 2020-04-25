@@ -27,6 +27,7 @@ services:
 
   cache:
     image: redis:5.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - cache:/data
     restart: always
@@ -38,7 +39,7 @@ services:
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     secrets:
-      - source: letsencrypt_cert
+      - source: letsencrypt_crt
         target: certificate.pem
       - source: letsencrypt_key
         target: certificate.pem.key
@@ -54,7 +55,7 @@ volumes:
   nextcloud_data:
 
 secrets:
-  letsencrypt_cert:
+  letsencrypt_crt:
     file: /etc/letsencrypt/live/home.friedrich.ventures/fullchain.pem
   letsencrypt_key:
     file: /etc/letsencrypt/live/home.friedrich.ventures/privkey.pem
