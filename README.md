@@ -24,3 +24,7 @@ docker-compose up -d # Or use systemd service
 IMPORTANT: `<HOST>` and `<PORT>` must be the external hostname (or ip) and port for example `nextcloud.domain.tld:443` ([more](https://docs.nextcloud.com/server/17/admin_manual/configuration_server/reverse_proxy_configuration.html)).
 
 - Connect via webrowser and finish installation
+
+## Todo
+
+- [ ] Systemd service dependencies
