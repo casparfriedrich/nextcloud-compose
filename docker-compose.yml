@@ -19,9 +19,16 @@ services:
 
   webserver:
     image: nginx:1.17-alpine
+    ports:
+      - "443:443"
     volumes:
       - nextcloud:/var/www/html:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    secrets:
+      - source: letsencrypt_crt
+        target: certificate.pem
+      - source: letsencrypt_key
+        target: certificate.pem.key
     restart: always
     depends_on:
       - app
@@ -40,20 +47,20 @@ services:
       - cache:/data
     restart: always
 
-  proxy:
-    image: haproxy:2.2-rc-alpine
-    ports:
-      - "443:443"
-    volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
-    secrets:
-      - source: letsencrypt_crt
-        target: certificate.pem
-      - source: letsencrypt_key
-        target: certificate.pem.key
-    restart: always
-    depends_on:
-      - webserver
+  # proxy:
+  #   image: haproxy:2.2-rc-alpine
+  #   ports:
+  #     - "443:443"
+  #   volumes:
+  #     - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+  #   secrets:
+  #     - source: letsencrypt_crt
+  #       target: certificate.pem
+  #     - source: letsencrypt_key
+  #       target: certificate.pem.key
+  #   restart: always
+  #   depends_on:
+  #     - webserver
 
 volumes:
   cache:
