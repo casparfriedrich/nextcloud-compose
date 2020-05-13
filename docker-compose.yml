@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  app:
+  nextcloud:
     image: nextcloud:18.0-fpm-alpine
     environment:
       - POSTGRES_HOST=database
@@ -31,7 +31,7 @@ services:
         target: certificate.pem.key
     restart: always
     depends_on:
-      - app
+      - nextcloud
 
   database:
     image: postgres:12.2-alpine
