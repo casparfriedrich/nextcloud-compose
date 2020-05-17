@@ -34,7 +34,7 @@ services:
       - nextcloud
 
   database:
-    image: postgres:12.2-alpine
+    image: postgres:12.3-alpine
     env_file:
       - database.env
     volumes:
