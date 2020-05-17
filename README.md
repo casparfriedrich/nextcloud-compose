@@ -29,4 +29,4 @@ IMPORTANT: `<HOST>` and `<PORT>` must be the external hostname (or ip) and port 
 
 - [ ] Systemd service dependencies
 - [ ] Minify nginx.conf
-- [ ] Evaluate _nginx_ as proxy replacement for haproxy
+- [x] Evaluate _nginx_ as proxy replacement for haproxy

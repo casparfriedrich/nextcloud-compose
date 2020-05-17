@@ -47,21 +47,6 @@ services:
       - cache:/data
     restart: always
 
-  # proxy:
-  #   image: haproxy:2.2-rc-alpine
-  #   ports:
-  #     - "443:443"
-  #   volumes:
-  #     - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
-  #   secrets:
-  #     - source: letsencrypt_crt
-  #       target: certificate.pem
-  #     - source: letsencrypt_key
-  #       target: certificate.pem.key
-  #   restart: always
-  #   depends_on:
-  #     - webserver
-
 volumes:
   cache:
   database:
