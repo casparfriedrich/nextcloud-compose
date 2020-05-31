@@ -56,6 +56,6 @@ volumes:
 
 secrets:
   fullchain:
-    file: /etc/letsencrypt/live/domain.tld/fullchain.pem
+    file: fullchain.pem
   privkey:
-    file: /etc/letsencrypt/live/domain.tld/privkey.pem
+    file: privkey.pem
