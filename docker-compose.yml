@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   nextcloud:
-    image: nextcloud:18.0-fpm-alpine
+    image: nextcloud:19.0-fpm-alpine
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
@@ -18,7 +18,7 @@ services:
       - cache
 
   webserver:
-    image: nginx:1.18-alpine
+    image: nginx:1.19-alpine
     ports:
       - "443:443"
     volumes:
