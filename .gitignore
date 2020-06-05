@@ -1,1 +1,7 @@
 **/*.pem
+
+/cache
+/database
+/nextcloud
+/nextcloud_config
+/nextcloud_data
