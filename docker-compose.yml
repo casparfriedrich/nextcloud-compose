@@ -12,7 +12,6 @@ services:
       - nextcloud:/var/www/html
       - nextcloud_config:/var/www/html/config
       - nextcloud_data:/var/www/html/data
-    restart: always
     depends_on:
       - database
       - cache
@@ -29,7 +28,6 @@ services:
         target: fullchain.pem
       - source: privkey
         target: privkey.pem
-    restart: always
     depends_on:
       - nextcloud
 
@@ -39,13 +37,11 @@ services:
       - database.env
     volumes:
       - database:/var/lib/postgresql/data
-    restart: always
 
   cache:
     image: redis:6.0-alpine
     volumes:
       - cache:/data
-    restart: always
 
 volumes:
   cache:
