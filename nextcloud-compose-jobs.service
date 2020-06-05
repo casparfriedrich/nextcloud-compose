@@ -1,6 +1,6 @@
 [Unit]
 Description=Nextcloud background jobs
-After=nextcloud-compose.service
+Requisite=nextcloud-compose.service
 
 [Service]
 Type=oneshot

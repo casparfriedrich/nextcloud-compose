@@ -1,6 +1,8 @@
 [Unit]
 Description=Nextcloud
-Requires=docker.service
+Requisite=docker.service
+After=docker.service
+Wants=nextcloud-compose-jobs.service
 
 [Service]
 Type=oneshot
