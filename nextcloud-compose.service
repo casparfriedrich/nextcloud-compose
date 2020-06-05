@@ -2,7 +2,7 @@
 Description=Nextcloud
 Requisite=docker.service
 After=docker.service
-Wants=nextcloud-compose-jobs.service
+Wants=nextcloud-compose-jobs.timer
 
 [Service]
 WorkingDirectory=/opt/nextcloud-compose
