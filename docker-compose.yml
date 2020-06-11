@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   nextcloud:
@@ -8,10 +8,11 @@ services:
       - REDIS_HOST=cache
     env_file:
       - database.env
+      - nextcloud.env
     volumes:
-      - ./nextcloud:/var/www/html
-      - ./nextcloud_config:/var/www/html/config
-      - ./nextcloud_data:/var/www/html/data
+      - ./html:/var/www/html
+      - ./config:/var/www/html/config
+      - ./data:/var/www/html/data
     depends_on:
       - database
       - cache
@@ -21,7 +22,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ./nextcloud:/var/www/html:ro
+      - ./html:/var/www/html:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     secrets:
       - source: fullchain
@@ -39,9 +40,13 @@ services:
       - ./database:/var/lib/postgresql/data
 
   cache:
-    image: redis:6.0-alpine
+    build: ./redis
+    privileged: true
     volumes:
-      - ./cache:/data
+      - cache:/data
+
+volumes:
+  cache:
 
 secrets:
   fullchain:
