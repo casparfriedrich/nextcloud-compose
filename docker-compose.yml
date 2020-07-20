@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   nextcloud:
-    image: nextcloud:19.0-fpm-alpine
+    image: nextcloud:19.0.1-fpm-alpine
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
+      - REDIS_HOST_PASSWORD=REDIS
     env_file:
       - database.env
       - nextcloud.env
@@ -43,6 +44,7 @@ services:
     privileged: true
     volumes:
       - cache:/data
+    command: redis-server --requirepass REDIS
 
 volumes:
   cache:
