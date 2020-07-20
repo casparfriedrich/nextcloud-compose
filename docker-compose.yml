@@ -7,9 +7,9 @@ services:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
     env_file:
-      - cache.env
-      - database.env
-      - nextcloud.env
+      - ./cache.env
+      - ./database.env
+      - ./nextcloud.env
     volumes:
       - ./html:/var/www/html
       - ./config:/var/www/html/config
@@ -35,13 +35,12 @@ services:
   database:
     image: postgres:12.3-alpine
     env_file:
-      - database.env
+      - ./database.env
     volumes:
       - ./database:/var/lib/postgresql/data
 
   cache:
     build: ./redis
-    privileged: true
     volumes:
       - cache:/data
 
