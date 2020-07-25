@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   nextcloud:
-    image: nextcloud:19.0.1-fpm-alpine
+    build: ./nextcloud
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
