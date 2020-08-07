@@ -7,7 +7,7 @@ case $1 in
 		docker-compose up --build --remove-orphans --abort-on-container-exit
 		;;
 	stop )
-		docker-compose down
+		docker-compose down --volumes
 		;;
 	cron )
 		docker-compose exec -d -u www-data nextcloud php cron.php
