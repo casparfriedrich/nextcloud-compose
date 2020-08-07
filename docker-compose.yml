@@ -33,7 +33,7 @@ services:
       - nextcloud
 
   database:
-    image: postgres:12.3-alpine
+    build: ./postgres
     env_file:
       - ./database.env
     volumes:
