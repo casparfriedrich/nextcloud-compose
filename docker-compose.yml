@@ -41,6 +41,11 @@ services:
 
   cache:
     build: ./redis
+    volumes:
+      - cache:/data
+
+volumes:
+  cache:
 
 secrets:
   fullchain:
