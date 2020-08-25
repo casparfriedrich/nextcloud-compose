@@ -11,9 +11,9 @@ services:
       - ./database.env
       - ./nextcloud.env
     volumes:
-      - ./html:/var/www/html
-      - ./config:/var/www/html/config
-      - ./data:/var/www/html/data
+      - html:/var/www/html
+      - config:/var/www/html/config
+      - data:/var/www/html/data
     depends_on:
       - database
       - cache
@@ -23,7 +23,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ./html:/var/www/html:ro
+      - html:/var/www/html:ro
     secrets:
       - source: fullchain
         target: fullchain.pem
@@ -37,7 +37,7 @@ services:
     env_file:
       - ./database.env
     volumes:
-      - ./database:/var/lib/postgresql/data
+      - database:/var/lib/postgresql/data
 
   cache:
     build: ./redis
@@ -46,6 +46,10 @@ services:
 
 volumes:
   cache:
+  config:
+  data:
+  database:
+  html:
 
 secrets:
   fullchain:
