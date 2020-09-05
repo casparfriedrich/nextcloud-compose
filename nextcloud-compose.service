@@ -5,11 +5,13 @@ After=docker.service
 Wants=nextcloud-compose-jobs.timer
 
 [Service]
-WorkingDirectory=/opt/nextcloud-compose
 ExecStart=/opt/nextcloud-compose/nextcloud.sh start
 ExecStop=/opt/nextcloud-compose/nextcloud.sh stop
 Restart=on-failure
 RestartSec=10
+TimeoutStartSec=10min
+TimeoutStopSec=10min
+WorkingDirectory=/opt/nextcloud-compose
 
 [Install]
 WantedBy=multi-user.target
