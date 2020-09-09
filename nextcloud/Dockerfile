@@ -1,4 +1,4 @@
-FROM nextcloud:19.0-fpm-alpine
+FROM nextcloud:20.0-fpm-alpine
 
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
