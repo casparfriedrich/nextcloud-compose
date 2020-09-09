@@ -9,8 +9,7 @@ ExecStart=/opt/nextcloud-compose/nextcloud.sh start
 ExecStop=/opt/nextcloud-compose/nextcloud.sh stop
 Restart=on-failure
 RestartSec=10
-TimeoutStartSec=10min
-TimeoutStopSec=10min
+TimeoutSec=infinity
 WorkingDirectory=/opt/nextcloud-compose
 
 [Install]

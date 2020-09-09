@@ -1,5 +1,7 @@
 FROM nextcloud:19.0-fpm-alpine
 
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 RUN set -e; \
     apk update; \
     apk add --no-cache perl samba-client;
