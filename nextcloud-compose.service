@@ -5,6 +5,7 @@ After=docker.service
 Wants=nextcloud-compose-jobs.timer
 
 [Service]
+Environment="COMPOSE_DOCKER_CLI_BUILD=1"
 ExecStart=/opt/nextcloud-compose/nextcloud.sh start
 ExecStop=/opt/nextcloud-compose/nextcloud.sh stop
 Restart=on-failure
