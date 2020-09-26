@@ -8,9 +8,11 @@ Wants=nextcloud-compose-jobs.timer
 Environment="COMPOSE_DOCKER_CLI_BUILD=1"
 ExecStart=/opt/nextcloud-compose/nextcloud.sh start
 ExecStop=/opt/nextcloud-compose/nextcloud.sh stop
+RemainAfterExit=true
 Restart=on-failure
 RestartSec=10
 TimeoutSec=infinity
+Type=oneshot
 WorkingDirectory=/opt/nextcloud-compose
 
 [Install]

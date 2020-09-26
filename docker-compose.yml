@@ -17,6 +17,7 @@ services:
     depends_on:
       - database
       - cache
+    restart: always
 
   webserver:
     build: ./nginx
@@ -31,6 +32,7 @@ services:
         target: privkey.pem
     depends_on:
       - nextcloud
+    restart: always
 
   database:
     build: ./postgres
@@ -38,11 +40,13 @@ services:
       - ./database.env
     volumes:
       - database:/var/lib/postgresql/data
+    restart: always
 
   cache:
     build: ./redis
     volumes:
       - cache:/data
+    restart: always
 
 volumes:
   cache:
