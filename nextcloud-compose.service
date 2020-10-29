@@ -1,6 +1,7 @@
 [Unit]
 Description=Nextcloud
 Requisite=docker.service
+Before=nextcloud-compose-jobs.timer
 After=docker.service
 Wants=nextcloud-compose-jobs.timer
 
