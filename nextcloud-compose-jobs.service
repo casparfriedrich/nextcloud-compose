@@ -4,8 +4,8 @@ Requisite=nextcloud-compose.service
 
 [Service]
 Type=oneshot
-WorkingDirectory=/opt/nextcloud-compose
-ExecStart=/opt/nextcloud-compose/nextcloud.sh cron
+WorkingDirectory=/var/lib/nextcloud/nextcloud-compose
+ExecStart=/var/lib/nextcloud/nextcloud-compose/nextcloud.sh cron
 
 [Install]
 WantedBy=multi-user.target
