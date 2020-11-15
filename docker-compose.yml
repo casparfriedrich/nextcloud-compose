@@ -44,12 +44,10 @@ services:
 
   cache:
     build: ./redis
-    volumes:
-      - cache:/data
+    tmpfs: /data
     restart: always
 
 volumes:
-  cache:
   config:
   data:
   database:
