@@ -22,14 +22,9 @@ services:
   webserver:
     build: ./nginx
     ports:
-      - "443:443"
+      - "8080:80"
     volumes:
       - html:/var/www/html:ro
-    secrets:
-      - source: fullchain
-        target: fullchain.pem
-      - source: privkey
-        target: privkey.pem
     depends_on:
       - nextcloud
     restart: always
@@ -52,9 +47,3 @@ volumes:
   data:
   database:
   html:
-
-secrets:
-  fullchain:
-    file: fullchain.pem
-  privkey:
-    file: privkey.pem

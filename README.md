@@ -1,8 +1,10 @@
-# nextcloud-compose
+nextcloud-compose
+-----------------
 
-Personal Nextcloud with docker-compose
-
-## installation
-
-- Change the NEXTCLOUD_ADMIN_PASSWORD variable in `nextcloud.env`
-- Change the POSTGRES_PASSWORD variable in `database.env`
+```php
+'trusted_domains'·=>·array·(
+··0·=>·'cloud.example.com',
+),
+'overwrite.cli.url' => 'https://cloud.example.com',
+'overwriteprotocol' => 'https',
+```
