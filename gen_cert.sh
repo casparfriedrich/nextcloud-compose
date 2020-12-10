@@ -6,7 +6,7 @@ openssl req \
     -x509 \
     -nodes \
     -newkey rsa:4096 \
-    -keyout privkey.pem \
+    -keyout fullchain.pem.key \
     -out fullchain.pem \
     -days 365 \
     -subj '/CN=localhost'
