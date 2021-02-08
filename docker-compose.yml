@@ -3,6 +3,8 @@ version: '3.8'
 services:
   nextcloud:
     build: ./nextcloud
+    ports:
+      - "8080:80"
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
@@ -17,16 +19,6 @@ services:
     depends_on:
       - database
       - cache
-    restart: always
-
-  webserver:
-    build: ./nginx
-    ports:
-      - "8080:80"
-    volumes:
-      - html:/var/www/html:ro
-    depends_on:
-      - nextcloud
     restart: always
 
   database:
