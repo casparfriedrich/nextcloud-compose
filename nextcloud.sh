@@ -6,10 +6,10 @@ cd $(dirname $0)
 
 case $1 in
 	start )
-		docker-compose up --build --force-recreate --remove-orphans --detach
+		docker-compose up -d
 		;;
 	stop )
-		docker-compose down --volumes --timeout 300
+		docker-compose down -t 300
 		;;
 	occ )
 		docker-compose exec -u www-data nextcloud php occ ${@:2}
