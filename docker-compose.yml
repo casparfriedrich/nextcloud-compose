@@ -4,7 +4,7 @@ services:
   nextcloud:
     build: ./nextcloud
     ports:
-      - "8080:80"
+      - "49153:80"
     environment:
       - POSTGRES_HOST=database
       - REDIS_HOST=cache
