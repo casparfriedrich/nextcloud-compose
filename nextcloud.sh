@@ -11,10 +11,10 @@ case $1 in
 	stop )
 		docker-compose down --volumes --timeout 300
 		;;
-	cron )
-		docker-compose exec -d -u www-data nextcloud php cron.php
-		;;
 	occ )
 		docker-compose exec -u www-data nextcloud php occ ${@:2}
+		;;
+	occd )
+		docker-compose exec -d -u www-data nextcloud php occ ${@:2}
 		;;
 esac

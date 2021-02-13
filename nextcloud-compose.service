@@ -2,7 +2,6 @@
 Description=Nextcloud
 Requisite=docker.service
 After=docker.service
-Wants=nextcloud-compose-jobs.timer
 
 [Service]
 ExecStart=/var/lib/nextcloud/nextcloud-compose/nextcloud.sh start
