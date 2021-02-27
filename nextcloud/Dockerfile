@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y \
     imagemagick \
     procps \
     smbclient \
-    supervisor
+    supervisor \
+    vim
 RUN rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/log/supervisord /var/run/supervisord
