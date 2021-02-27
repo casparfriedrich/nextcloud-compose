@@ -17,6 +17,8 @@ RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' /usr/local/e
 
 RUN echo '0 * * * * php -f /var/www/html/occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
 
+COPY ./notify_push.sh /notify_push.sh
+
 ENV NEXTCLOUD_UPDATE=1
 
 CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
