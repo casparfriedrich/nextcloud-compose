@@ -31,10 +31,12 @@ services:
 
   cache:
     build: ./redis
-    tmpfs: /data
+    volumes:
+      - cache:/data
     restart: always
 
 volumes:
+  cache:
   config:
   data:
   database:
