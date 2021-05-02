@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   nextcloud:
@@ -6,38 +6,38 @@ services:
     ports:
       - "49153:80"
     environment:
-      - POSTGRES_HOST=database
-      - REDIS_HOST=cache
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
     env_file:
-      - ./cache.env
-      - ./database.env
       - ./nextcloud.env
+      - ./postgres.env
+      - ./redis.env
     volumes:
-      - html:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - nextcloud:/var/www/html
+      - nextcloud_config:/var/www/html/config
+      - nextcloud_data:/var/www/html/data
     depends_on:
-      - database
-      - cache
+      - postgres
+      - redis
     restart: always
 
-  database:
+  postgres:
     build: ./postgres
     env_file:
-      - ./database.env
+      - ./postgres.env
     volumes:
-      - database:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     restart: always
 
-  cache:
+  redis:
     build: ./redis
     volumes:
-      - cache:/data
+      - redis:/data
     restart: always
 
 volumes:
-  cache:
-  config:
-  data:
-  database:
-  html:
+  nextcloud:
+  nextcloud_config:
+  nextcloud_data:
+  postgres:
+  redis:
