@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 set -euo pipefail
 
@@ -9,7 +9,7 @@ case $1 in
 		docker-compose up -d
 		;;
 	stop )
-		docker-compose down -t 60
+		docker-compose down -t 300
 		;;
 	occ )
 		docker-compose exec -u www-data nextcloud php occ ${@:2}
