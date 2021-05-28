@@ -5,11 +5,17 @@ set -euo pipefail
 cd $(dirname $0)
 
 case $1 in
-	start )
+	up )
 		docker-compose up -d
 		;;
-	stop )
+	down )
 		docker-compose down -t 300
+		;;
+	start )
+		docker-compose start
+		;;
+	stop )
+		docker-compose stop -t 300
 		;;
 	occ )
 		docker-compose exec -u www-data nextcloud php occ ${@:2}
