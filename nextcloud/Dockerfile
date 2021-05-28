@@ -2,11 +2,14 @@ FROM nextcloud:21.0-apache
 
 RUN apt-get update && apt-get install -y \
     imagemagick \
+    locales \
     procps \
     smbclient \
     supervisor \
     vim
 RUN rm -rf /var/lib/apt/lists/*
+
+RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN mkdir -p /var/log/supervisord /var/run/supervisord
 COPY supervisord.conf /
@@ -17,6 +20,7 @@ RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' /usr/local/e
 
 RUN echo '0 * * * * php -f /var/www/html/occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
 
+ENV LANG=en_US.utf8
 ENV NEXTCLOUD_UPDATE=1
 
 CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
