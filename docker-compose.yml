@@ -17,8 +17,10 @@ services:
       - nextcloud_config:/var/www/html/config
       - nextcloud_data:/var/www/html/data
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     restart: always
     stop_signal: SIGTERM
 
@@ -29,6 +31,9 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "nextcloud"]
+      interval: 5s
     stop_signal: SIGTERM
 
   redis:
