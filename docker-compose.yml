@@ -13,9 +13,9 @@ services:
       - ./postgres.env
       - ./redis.env
     volumes:
-      - nextcloud:/var/www/html
-      - nextcloud_config:/var/www/html/config
-      - nextcloud_data:/var/www/html/data
+      - ./volumes/nextcloud:/var/www/html
+      - ./volumes/nextcloud_config:/var/www/html/config
+      - ./volumes/nextcloud_data:/var/www/html/data
     depends_on:
       postgres:
         condition: service_healthy
@@ -29,7 +29,7 @@ services:
     env_file:
       - ./postgres.env
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - ./volumes/postgres/12/data:/var/lib/postgresql/data
     restart: always
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "nextcloud"]
@@ -39,13 +39,6 @@ services:
   redis:
     build: ./redis
     volumes:
-      - redis:/data
+      - ./volumes/redis:/data
     restart: always
     stop_signal: SIGTERM
-
-volumes:
-  nextcloud:
-  nextcloud_config:
-  nextcloud_data:
-  postgres:
-  redis:
