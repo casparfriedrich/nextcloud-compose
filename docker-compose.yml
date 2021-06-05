@@ -3,8 +3,11 @@ version: '3.9'
 services:
   nextcloud:
     build: ./nextcloud
-    ports:
-      - "49153:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
       - POSTGRES_HOST=postgres
       - REDIS_HOST=redis
@@ -12,33 +15,30 @@ services:
       - ./nextcloud.env
       - ./postgres.env
       - ./redis.env
+    ports:
+      - "49153:80"
+    restart: always
+    stop_signal: SIGTERM
     volumes:
       - ./volumes/nextcloud:/var/www/html
       - ./volumes/nextcloud_config:/var/www/html/config
       - ./volumes/nextcloud_data:/var/www/html/data
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    restart: always
-    stop_signal: SIGTERM
 
   postgres:
     build: ./postgres
     env_file:
       - ./postgres.env
-    volumes:
-      - ./volumes/postgres/data:/var/lib/postgresql/data
-    restart: always
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "nextcloud"]
       interval: 5s
+    restart: always
     stop_signal: SIGTERM
+    volumes:
+      - ./volumes/postgres/data:/var/lib/postgresql/data
 
   redis:
     build: ./redis
-    volumes:
-      - ./volumes/redis:/data
     restart: always
     stop_signal: SIGTERM
+    volumes:
+      - ./volumes/redis:/data

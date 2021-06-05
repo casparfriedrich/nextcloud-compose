@@ -20,8 +20,8 @@ added to `config.php` to ensure that nextcloud creates correct URLs.
 
 ```bash
 # Export database
-docker exec -i <CONTAINER_ID> pg_dumpall -U nextcloud > dump.sql
+docker exec -i <CONTAINER ID> pg_dumpall -U nextcloud > dump.sql
 
 #import database
-docker exec -i <CONTAINER_ID> psql -U nextcloud -d nextcloud < dump.sql
+docker exec -i <CONTAINER ID> psql -U nextcloud -d nextcloud < dump.sql
 ```
