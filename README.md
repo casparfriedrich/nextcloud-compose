@@ -15,3 +15,13 @@ added to `config.php` to ensure that nextcloud creates correct URLs.
 'overwrite.cli.url' => 'https://cloud.example.com',
 'overwriteprotocol' => 'https',
 ```
+
+## Postgres upgrade
+
+```bash
+# Export database
+docker exec -i <CONTAINER_ID> pg_dumpall -U nextcloud > dump.sql
+
+#import database
+docker exec -i <CONTAINER_ID> psql -U nextcloud -d nextcloud < dump.sql
+```
