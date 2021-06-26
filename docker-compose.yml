@@ -2,8 +2,8 @@ version: '3.9'
 
 services:
   app:
-    container_name: nextcloud-app
     build: ./nextcloud
+    container_name: nextcloud-app
     depends_on:
       cache:
         condition: service_started
@@ -26,8 +26,8 @@ services:
       - ./volumes/nextcloud_data:/var/www/html/data
 
   database:
-    container_name: nextcloud-database
     build: ./postgres
+    container_name: nextcloud-database
     env_file:
       - ./postgres.env
     healthcheck:
