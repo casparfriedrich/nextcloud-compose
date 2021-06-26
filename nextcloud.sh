@@ -18,9 +18,9 @@ case $1 in
 		docker-compose stop -t 300
 		;;
 	occ )
-		docker-compose exec -u www-data nextcloud php occ ${@:2}
+		docker-compose exec -u www-data app php occ ${@:2}
 		;;
 	occd )
-		docker-compose exec -d -u www-data nextcloud php occ ${@:2}
+		docker-compose exec -d -u www-data app php occ ${@:2}
 		;;
 esac
