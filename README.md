@@ -13,8 +13,8 @@ nextcloud-compose
 
 ```bash
 # Export database
-docker exec -i <CONTAINER ID> pg_dumpall -U nextcloud > dump.sql
+docker exec -i nextcloud-database pg_dumpall -U nextcloud > dump.sql
 
 #import database
-docker exec -i <CONTAINER ID> psql -U nextcloud -d nextcloud < dump.sql
+docker exec -i nextcloud-database psql -U nextcloud -d nextcloud < dump.sql
 ```

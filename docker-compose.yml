@@ -1,16 +1,17 @@
 version: '3.9'
 
 services:
-  nextcloud:
+  app:
+    container_name: nextcloud-app
     build: ./nextcloud
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
+      cache:
         condition: service_started
+      database:
+        condition: service_healthy
     environment:
-      - POSTGRES_HOST=postgres
-      - REDIS_HOST=redis
+      - POSTGRES_HOST=database
+      - REDIS_HOST=cache
     env_file:
       - ./nextcloud.env
       - ./postgres.env
@@ -24,7 +25,8 @@ services:
       - ./volumes/nextcloud_config:/var/www/html/config
       - ./volumes/nextcloud_data:/var/www/html/data
 
-  postgres:
+  database:
+    container_name: nextcloud-database
     build: ./postgres
     env_file:
       - ./postgres.env
@@ -36,8 +38,9 @@ services:
     volumes:
       - ./volumes/postgres/data:/var/lib/postgresql/data
 
-  redis:
+  cache:
     build: ./redis
+    container_name: nextcloud-cache
     restart: always
     stop_signal: SIGTERM
     volumes:
