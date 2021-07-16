@@ -21,9 +21,9 @@ services:
     restart: always
     stop_signal: SIGTERM
     volumes:
-      - ./volumes/nextcloud:/var/www/html
-      - ./volumes/nextcloud_config:/var/www/html/config
-      - ./volumes/nextcloud_data:/var/www/html/data
+      - ./local/nextcloud/app:/var/www/html
+      - ./local/nextcloud/config:/var/www/html/config
+      - ./local/nextcloud/data:/var/www/html/data
 
   database:
     build: ./postgres
@@ -36,7 +36,7 @@ services:
     restart: always
     stop_signal: SIGTERM
     volumes:
-      - ./volumes/postgres/data:/var/lib/postgresql/data
+      - ./local/nextcloud/postgres:/var/lib/postgresql/data
 
   cache:
     build: ./redis
@@ -44,4 +44,4 @@ services:
     restart: always
     stop_signal: SIGTERM
     volumes:
-      - ./volumes/redis:/data
+      - ./local/nextcloud/redis:/data
