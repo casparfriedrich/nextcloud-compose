@@ -12,6 +12,8 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG=en_US.utf8
 
+RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 RUN sed -i 's/post_max_size = 8M/post_max_size = 80M/g' /usr/local/etc/php/php.ini
 RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/g' /usr/local/etc/php/php.ini
