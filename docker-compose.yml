@@ -25,12 +25,12 @@ services:
     hostname: app
     image: nextcloud-app
     ports:
-      - 80:80
+      - 8080:80
     restart: unless-stopped
     volumes:
-      - app:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - /var/lib/nextcloud/app:/var/www/html
+      - /var/lib/nextcloud/config:/var/www/html/config
+      - /var/lib/nextcloud/data:/var/www/html/data
 
   cron:
     container_name: nextcloud-cron
@@ -47,9 +47,9 @@ services:
     restart: unless-stopped
     stop_signal: SIGKILL
     volumes:
-      - app:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - /var/lib/nextcloud/app:/var/www/html
+      - /var/lib/nextcloud/config:/var/www/html/config
+      - /var/lib/nextcloud/data:/var/www/html/data
 
   hpb:
     container_name: nextcloud-hpb
@@ -71,9 +71,9 @@ services:
     stop_signal: SIGKILL
     user: www-data
     volumes:
-      - app:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - /var/lib/nextcloud/app:/var/www/html
+      - /var/lib/nextcloud/config:/var/www/html/config
+      - /var/lib/nextcloud/data:/var/www/html/data
 
   cache:
     build: ./redis
@@ -87,7 +87,7 @@ services:
     image: nextcloud-cache
     restart: unless-stopped
     volumes:
-      - cache:/data
+      - /var/lib/nextcloud/cache:/data
 
   db:
     build: ./postgres
@@ -101,15 +101,8 @@ services:
     image: nextcloud-db
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - /var/lib/nextcloud/db:/var/lib/postgresql/data
 
 networks:
   default:
     name: nextcloud
-
-volumes:
-  app:
-  cache:
-  config:
-  data:
-  db:
