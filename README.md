@@ -7,6 +7,9 @@ nextcloud-compose
 
 ```php
 'overwrite.cli.url' => 'https://cloud.example.com',
+'overwritehost' => 'cloud.example.com',
+'overwriteprotocol' => 'https',
+
 ```
 
 ## Postgres upgrade (via export/import)
