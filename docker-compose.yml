@@ -44,4 +44,7 @@ services:
     restart: always
     stop_signal: SIGTERM
     volumes:
-      - ./local/nextcloud/redis:/data
+      - cache:/data
+
+volumes:
+  cache:
