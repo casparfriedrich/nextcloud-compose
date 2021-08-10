@@ -9,7 +9,7 @@ case $1 in
 		docker-compose up -d
 		;;
 	down )
-		docker-compose down -t 300
+		docker-compose down -t 300 -v
 		;;
 	start )
 		docker-compose start

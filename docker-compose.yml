@@ -43,8 +43,3 @@ services:
     container_name: nextcloud-cache
     restart: always
     stop_signal: SIGTERM
-    volumes:
-      - cache:/data
-
-volumes:
-  cache:
