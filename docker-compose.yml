@@ -17,7 +17,7 @@ services:
       - ./postgres.env
       - ./redis.env
     ports:
-      - "49153:80"
+      - "80:80"
     restart: always
     stop_signal: SIGTERM
     volumes:
