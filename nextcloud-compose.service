@@ -4,8 +4,8 @@ Requisite=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/var/lib/nextcloud/nextcloud-compose/nextcloud.sh up
-ExecStop=/var/lib/nextcloud/nextcloud-compose/nextcloud.sh down
+ExecStart=/var/lib/nextcloud/nextcloud-compose/nextcloud.sh start
+ExecStop=/var/lib/nextcloud/nextcloud-compose/nextcloud.sh stop
 RemainAfterExit=true
 Restart=on-failure
 RestartSec=10
