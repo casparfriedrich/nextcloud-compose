@@ -6,7 +6,7 @@ services:
     container_name: nextcloud-app
     depends_on:
       cache:
-        condition: service_started
+        condition: service_healthy
       database:
         condition: service_healthy
     environment:
@@ -41,5 +41,8 @@ services:
   cache:
     build: ./redis
     container_name: nextcloud-cache
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
     restart: always
     stop_signal: SIGTERM
