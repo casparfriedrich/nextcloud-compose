@@ -16,6 +16,9 @@ services:
       - ./nextcloud.env
       - ./postgres.env
       - ./redis.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/cron.php"]
+      interval: 5s
     ports:
       - "80:80"
     restart: always
