@@ -6,7 +6,7 @@ services:
     container_name: nextcloud-app
     depends_on:
       cache:
-        condition: service_started
+        condition: service_healthy
       database:
         condition: service_healthy
     environment:
@@ -16,8 +16,34 @@ services:
       - ./nextcloud.env
       - ./postgres.env
       - ./redis.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/cron.php"]
+      interval: 5s
     ports:
       - "80:80"
+    restart: always
+    stop_signal: SIGTERM
+    volumes:
+      - ./local/nextcloud/app:/var/www/html
+      - ./local/nextcloud/config:/var/www/html/config
+      - ./local/nextcloud/data:/var/www/html/data
+
+  notify_push:
+    image: nextcloud-compose_app
+    container_name: nextcloud-notify_push
+    depends_on:
+      app:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+    entrypoint: /var/www/html/custom_apps/notify_push/bin/x86_64/notify_push /var/www/html/config/config.php
+    environment:
+      - PORT=7867
+      - NEXTCLOUD_URL=http://app
+    ports:
+      - "7867:7867"
     restart: always
     stop_signal: SIGTERM
     volumes:
@@ -41,5 +67,8 @@ services:
   cache:
     build: ./redis
     container_name: nextcloud-cache
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
     restart: always
     stop_signal: SIGTERM
