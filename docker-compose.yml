@@ -28,9 +28,9 @@ services:
       - ./local/nextcloud/config:/var/www/html/config
       - ./local/nextcloud/data:/var/www/html/data
 
-  notify_push:
+  hpb:
     image: nextcloud-compose_app
-    container_name: nextcloud-notify_push
+    container_name: nextcloud-hpb
     depends_on:
       app:
         condition: service_healthy
