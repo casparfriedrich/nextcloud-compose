@@ -1,9 +1,31 @@
 nextcloud-compose
 -----------------
 
-# High Performance Backend (HPB)
+# Installation
 
-- Install and enable `client Push` app from store
+1. Start main application
+
+```bash
+docker-compose up --detach app # It's imporatant to not start the high performance backend, yet!
+```
+
+2. Wait until you can connect and log in via web browser
+
+3. Install and enable `notify_push` app
+
+```bash
+./nextcloud.sh occ app:install notify_push
+```
+
+4. _todo_ Configure reverse proxy
+
+5. Start High Performance Backend (HPB)
+
+```bash
+docker-compose up --detach hpb
+```
+
+# High Performance Backend (HPB)
 
 - Add proxy to list of trusted proxies in `config.php`:
 
