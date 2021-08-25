@@ -24,7 +24,7 @@ services:
     restart: always
     stop_signal: SIGTERM
     volumes:
-      - ./local/nextcloud/app:/var/www/html
+      - ./local/nextcloud/html:/var/www/html
       - ./local/nextcloud/config:/var/www/html/config
       - ./local/nextcloud/data:/var/www/html/data
 
