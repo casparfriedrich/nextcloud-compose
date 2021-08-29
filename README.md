@@ -14,7 +14,7 @@ docker-compose up --detach app # It's imporatant to not start the high performan
 3. Install and enable `notify_push` app
 
 ```bash
-./nextcloud.sh occ app:install notify_push
+./occ app:install notify_push
 ```
 
 4. _todo_ Configure reverse proxy
