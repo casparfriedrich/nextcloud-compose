@@ -9,9 +9,7 @@ RUN set -e; \
     apt-get update; \
     apt-get install --assume-yes --no-install-recommends \
         imagemagick-6.q16 \
-        imagemagick-6.q16hdri \
         libmagickcore-6.q16-6-extra \
-        libmagickcore-6.q16hdri-6-extra \
         procps \
         smbclient \
         supervisor \
