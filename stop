@@ -4,4 +4,4 @@ set -euxo pipefail
 
 cd $(dirname $0)
 
-docker-compose down -t 300 -v
+docker compose down -t 300 -v
