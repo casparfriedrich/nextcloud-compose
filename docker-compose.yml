@@ -69,9 +69,12 @@ services:
       test: redis-cli ping
     restart: always
     stop_signal: SIGTERM
+    volumes:
+      - cache:/data
 
 volumes:
   html:
+  cache:
   config:
   data:
   database:
