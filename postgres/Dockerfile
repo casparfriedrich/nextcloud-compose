@@ -1,3 +1,3 @@
-FROM postgres:13.4
+FROM postgres:13.5
 
 COPY postgresql.conf /etc/postgresql/postgresql.conf
