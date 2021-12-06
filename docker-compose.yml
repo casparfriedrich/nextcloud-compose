@@ -65,6 +65,8 @@ services:
   cache:
     build: ./redis
     container_name: nextcloud-cache
+    env_file:
+      - ./redis.env
     healthcheck:
       test: redis-cli ping
     restart: always
