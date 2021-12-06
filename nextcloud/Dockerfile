@@ -17,13 +17,6 @@ RUN set -e; \
     ; \
     rm -rf /var/lib/apt/lists/*
 
-RUN set -e; \
-    \
-    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini; \
-    sed -i 's/^post_max_size.*$/post_max_size = 80M/g' /usr/local/etc/php/php.ini; \
-    sed -i 's/^upload_max_filesize.*$/upload_max_filesize = 20M/g' /usr/local/etc/php/php.ini; \
-    sed -i 's/^output_buffering.*$/output_buffering = off/g' /usr/local/etc/php/php.ini
-
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 RUN echo '0 * * * * php -f /var/www/html/occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
