@@ -28,7 +28,7 @@ services:
       - data:/var/www/html/data
 
   hpb:
-    image: nextcloud-compose_app
+    build: ./nextcloud
     container_name: nextcloud-hpb
     depends_on:
       app:
