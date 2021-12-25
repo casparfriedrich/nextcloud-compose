@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 
 services:
   app:
@@ -27,17 +27,27 @@ services:
       - config:/var/www/html/config
       - data:/var/www/html/data
 
+  cron:
+    build: ./nextcloud
+    container_name: nextcloud-cron
+    depends_on:
+      app:
+        condition: service_healthy
+    command: ["/cron.sh"]
+    restart: always
+    stop_signal: SIGTERM
+    volumes:
+      - html:/var/www/html
+      - config:/var/www/html/config
+      - data:/var/www/html/data
+
   hpb:
     build: ./nextcloud
     container_name: nextcloud-hpb
     depends_on:
       app:
         condition: service_healthy
-      cache:
-        condition: service_healthy
-      database:
-        condition: service_healthy
-    entrypoint: /var/www/html/custom_apps/notify_push/bin/x86_64/notify_push /var/www/html/config/config.php
+    command: ["/var/www/html/custom_apps/notify_push/bin/x86_64/notify_push", "/var/www/html/config/config.php"]
     environment:
       - PORT=7867
       - NEXTCLOUD_URL=http://app

@@ -20,7 +20,3 @@ RUN set -e; \
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 RUN echo '0 * * * * php -f /var/www/html/occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
-
-COPY supervisord.conf /etc/supervisor/conf.d/
-
-CMD ["/usr/bin/supervisord"]
