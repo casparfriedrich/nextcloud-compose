@@ -18,6 +18,7 @@ services:
       - ./redis.env
     healthcheck:
       test: curl -f http://localhost/status.php
+    image: nextcloud-app
     ports:
       - "80:80"
     restart: always
@@ -28,12 +29,12 @@ services:
       - data:/var/www/html/data
 
   cron:
-    build: ./nextcloud
     container_name: nextcloud-cron
+    command: ["/cron.sh"]
     depends_on:
       app:
         condition: service_healthy
-    command: ["/cron.sh"]
+    image: nextcloud-app
     restart: always
     stop_signal: SIGTERM
     volumes:
@@ -42,17 +43,17 @@ services:
       - data:/var/www/html/data
 
   hpb:
-    build: ./nextcloud
     container_name: nextcloud-hpb
+    command: ["/var/www/html/custom_apps/notify_push/bin/x86_64/notify_push", "/var/www/html/config/config.php"]
     depends_on:
       app:
         condition: service_healthy
-    command: ["/var/www/html/custom_apps/notify_push/bin/x86_64/notify_push", "/var/www/html/config/config.php"]
     environment:
       - PORT=7867
       - NEXTCLOUD_URL=http://app
     ports:
       - "7867:7867"
+    image: nextcloud-app
     restart: always
     stop_signal: SIGTERM
     volumes:
