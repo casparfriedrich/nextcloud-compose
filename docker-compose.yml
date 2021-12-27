@@ -22,7 +22,7 @@ services:
     ports:
       - "80:80"
     restart: always
-    stop_signal: SIGTERM
+    stop_signal: SIGWINCH
     volumes:
       - html:/var/www/html
       - config:/var/www/html/config
@@ -36,7 +36,6 @@ services:
         condition: service_healthy
     image: nextcloud-app
     restart: always
-    stop_signal: SIGTERM
     volumes:
       - html:/var/www/html
       - config:/var/www/html/config
@@ -55,7 +54,6 @@ services:
       - "7867:7867"
     image: nextcloud-app
     restart: always
-    stop_signal: SIGTERM
     volumes:
       - html:/var/www/html
       - config:/var/www/html/config
@@ -69,7 +67,6 @@ services:
     healthcheck:
       test: pg_isready -U nextcloud
     restart: always
-    stop_signal: SIGTERM
     volumes:
       - database:/var/lib/postgresql/data
 
@@ -81,7 +78,6 @@ services:
     healthcheck:
       test: redis-cli ping
     restart: always
-    stop_signal: SIGTERM
     volumes:
       - cache:/data
 
