@@ -9,11 +9,9 @@ services:
         condition: service_healthy
       database:
         condition: service_healthy
-    environment:
-      - POSTGRES_HOST=database
-      - REDIS_HOST=cache
     env_file:
       - ./nextcloud.env
+      - ./nextcloud-app.env
       - ./postgres.env
       - ./redis.env
     healthcheck:
@@ -34,6 +32,9 @@ services:
     depends_on:
       app:
         condition: service_healthy
+    env_file:
+      - ./nextcloud.env
+      - ./nextcloud-cron.env
     image: nextcloud-app
     restart: always
     volumes:
@@ -43,17 +44,19 @@ services:
 
   hpb:
     container_name: nextcloud-hpb
-    entrypoint: ["/var/www/html/custom_apps/notify_push/bin/x86_64/notify_push", "/var/www/html/config/config.php"]
+    entrypoint: ["/hpb.sh"]
     depends_on:
       app:
         condition: service_healthy
-    environment:
-      - PORT=7867
-      - NEXTCLOUD_URL=http://app
+    env_file:
+      - ./nextcloud.env
+      - ./nextcloud-hpb.env
+      - ./redis.env
+    image: nextcloud-app
     ports:
       - "7867:7867"
-    image: nextcloud-app
     restart: always
+    user: www-data
     volumes:
       - html:/var/www/html
       - config:/var/www/html/config

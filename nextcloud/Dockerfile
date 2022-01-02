@@ -3,8 +3,6 @@ FROM nextcloud:22.2-apache
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV NEXTCLOUD_UPDATE=1
-ENV PHP_MEMORY_LIMIT=1G
-ENV PHP_UPLOAD_LIMIT=10G
 
 RUN set -e; \
     \
@@ -26,3 +24,5 @@ ADD https://git.grml.org/f/grml-etc-core/etc/zsh/zshrc /etc/zsh/zshrc
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 RUN echo '0 * * * * php -f /var/www/html/occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
+
+COPY hpb.sh /
