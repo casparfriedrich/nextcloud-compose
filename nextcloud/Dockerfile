@@ -14,12 +14,8 @@ RUN set -e; \
         smbclient \
         supervisor \
         vim \
-        zplug \
-        zsh \
     ; \
     rm -rf /var/lib/apt/lists/*
-
-ADD https://git.grml.org/f/grml-etc-core/etc/zsh/zshrc /etc/zsh/zshrc
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
