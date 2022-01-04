@@ -9,9 +9,14 @@ services:
         condition: service_healthy
       database:
         condition: service_healthy
+    environment:
+      - NEXTCLOUD_ADMIN_USER=admin
+      - NEXTCLOUD_ADMIN_PASSWORD=admin
+      - NEXTCLOUD_TRUSTED_DOMAINS=
+      - OVERWRITEHOST=
+      - OVERWRITEPROTOCOL=
     env_file:
       - ./nextcloud.env
-      - ./nextcloud-app.env
       - ./postgres.env
       - ./redis.env
     healthcheck:
@@ -34,7 +39,6 @@ services:
         condition: service_healthy
     env_file:
       - ./nextcloud.env
-      - ./nextcloud-cron.env
       - ./postgres.env
       - ./redis.env
     image: nextcloud-app
@@ -50,9 +54,11 @@ services:
     depends_on:
       app:
         condition: service_healthy
+    environment:
+      - PORT=7867
+      - NEXTCLOUD_URL=http://app
     env_file:
       - ./nextcloud.env
-      - ./nextcloud-hpb.env
       - ./postgres.env
       - ./redis.env
     image: nextcloud-app
