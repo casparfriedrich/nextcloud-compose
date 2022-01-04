@@ -53,6 +53,7 @@ services:
     env_file:
       - ./nextcloud.env
       - ./nextcloud-hpb.env
+      - ./postgres.env
       - ./redis.env
     image: nextcloud-app
     ports:
