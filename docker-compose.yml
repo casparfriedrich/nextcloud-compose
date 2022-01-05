@@ -24,7 +24,7 @@ services:
     image: nextcloud-app
     ports:
       - "80:80"
-    restart: always
+    restart: unless-stopped
     stop_signal: SIGWINCH
     volumes:
       - html:/var/www/html
@@ -42,7 +42,7 @@ services:
       - ./postgres.env
       - ./redis.env
     image: nextcloud-app
-    restart: always
+    restart: unless-stopped
     volumes:
       - html:/var/www/html
       - config:/var/www/html/config
@@ -64,7 +64,7 @@ services:
     image: nextcloud-app
     ports:
       - "7867:7867"
-    restart: always
+    restart: unless-stopped
     user: www-data
     volumes:
       - html:/var/www/html
@@ -78,7 +78,7 @@ services:
       - ./postgres.env
     healthcheck:
       test: pg_isready -U nextcloud
-    restart: always
+    restart: unless-stopped
     volumes:
       - database:/var/lib/postgresql/data
 
@@ -89,7 +89,7 @@ services:
       - ./redis.env
     healthcheck:
       test: redis-cli ping
-    restart: always
+    restart: unless-stopped
     volumes:
       - cache:/data
 
