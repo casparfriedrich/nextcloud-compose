@@ -20,8 +20,10 @@ services:
       - ./postgres.env
       - ./redis.env
     healthcheck:
-      test: ["CMD", "true"]
+      test: ["CMD", "curl", "-f", "http://localhost/status.php"]
     image: nextcloud-app
+    ports:
+      - 80:80
     restart: unless-stopped
     volumes:
       - html:/var/www/html
@@ -49,11 +51,11 @@ services:
     container_name: nextcloud-hpb
     entrypoint: ["/hpb.sh"]
     depends_on:
-      web:
+      app:
         condition: service_healthy
     environment:
       - PORT=7867
-      - NEXTCLOUD_URL=http://web
+      - NEXTCLOUD_URL=http://app
     env_file:
       - ./nextcloud.env
       - ./postgres.env
@@ -67,22 +69,6 @@ services:
       - html:/var/www/html
       - config:/var/www/html/config
       - data:/var/www/html/data
-
-  web:
-    build: ./nginx
-    container_name: nextcloud-web
-    depends_on:
-      app:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "service", "nginx", "status"]
-      interval: 5s
-    image: nextcloud-web
-    ports:
-      - 80:80
-    restart: unless-stopped
-    volumes:
-      - html:/var/www/html:ro
 
   database:
     build: ./postgres
