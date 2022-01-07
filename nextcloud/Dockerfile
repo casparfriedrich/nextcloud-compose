@@ -1,4 +1,4 @@
-FROM nextcloud:22.2-apache
+FROM nextcloud:22.2-fpm
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG C.UTF-8
