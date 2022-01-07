@@ -105,12 +105,9 @@ services:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
     restart: unless-stopped
-    volumes:
-      - cache:/data
 
 volumes:
   html:
-  cache:
   config:
   data:
   database:
