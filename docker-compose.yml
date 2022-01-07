@@ -94,6 +94,10 @@ services:
     image: nextcloud-cache
     restart: unless-stopped
 
+networks:
+  default:
+    name: nextcloud
+
 volumes:
   html:
   config:
