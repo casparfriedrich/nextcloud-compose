@@ -1,4 +1,4 @@
-FROM nextcloud:22.2-apache
+FROM nextcloud:23.0-apache
 
 ENV APACHE_DISABLE_REWRITE_IP=1
 ENV DEBIAN_FRONTEND=noninteractive
