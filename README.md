@@ -1,15 +1,29 @@
 nextcloud-compose
 -----------------
 
-# Installation
+# Notes
 
-1. Start main application: `./start app` _It's imporatant to not start the high performance backend, yet!_
-2. Wait until you can connect and log in via web browser
-3. Install and enable `notify_push` app: `./occ app:install notify_push`
-4. _todo_ Configure reverse proxy
-5. Start High Performance Backend (HPB): `./start hpb`
+## ZFS
 
-# Configure high performance backend (HPB)
+```bash
+zfs create \
+    -o mountpoint=/var/lib/docker \
+    tank/docker
+
+zfs create \
+    -o mountpoint=/var/lib/nextcloud \
+    tank/nextcloud
+
+# https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/
+zfs create \
+    -o mountpoint=/var/lib/nextcloud/db \
+    -o compression=zstd \
+    -o logbias=throughput \
+    -o recordsize=16k \
+    tank/nextcloud/db
+```
+
+## Configure high performance backend (HPB)
 
 - Add proxy to list of trusted proxies in `config.php`:
 
@@ -26,8 +40,6 @@ nextcloud-compose
 php occ notify_push:setup https://cloud.example.com/push
 ```
 
-# Notes
-
 ## Reverse proxy
 
 ```php
@@ -35,7 +47,7 @@ php occ notify_push:setup https://cloud.example.com/push
 'overwriteprotocol' => 'https',
 ```
 
-## Postgres upgrade (via export/import)
+## Postgres upgrade via export and (re-)import
 
 ```bash
 # Export
