@@ -7,7 +7,7 @@ services:
     depends_on:
       cache:
         condition: service_healthy
-      database:
+      db:
         condition: service_healthy
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
@@ -16,9 +16,9 @@ services:
       - OVERWRITEHOST=
       - OVERWRITEPROTOCOL=
     env_file:
+      - ./cache.env
+      - ./db.env
       - ./nextcloud.env
-      - ./postgres.env
-      - ./redis.env
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/status.php"]
     image: nextcloud-app
@@ -38,9 +38,9 @@ services:
       app:
         condition: service_healthy
     env_file:
+      - ./cache.env
+      - ./db.env
       - ./nextcloud.env
-      - ./postgres.env
-      - ./redis.env
     image: nextcloud-app
     restart: unless-stopped
     volumes:
@@ -58,9 +58,9 @@ services:
       - PORT=7867
       - NEXTCLOUD_URL=http://app
     env_file:
+      - ./cache.env
+      - ./db.env
       - ./nextcloud.env
-      - ./postgres.env
-      - ./redis.env
     image: nextcloud-app
     ports:
       - "7867:7867"
@@ -71,24 +71,24 @@ services:
       - config:/var/www/html/config
       - data:/var/www/html/data
 
-  database:
+  db:
     build: ./postgres
-    container_name: nextcloud-database
+    container_name: nextcloud-db
     env_file:
-      - ./postgres.env
+      - ./db.env
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "nextcloud"]
       interval: 5s
     image: nextcloud-db
     restart: unless-stopped
     volumes:
-      - database:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
 
   cache:
     build: ./redis
     container_name: nextcloud-cache
     env_file:
-      - ./redis.env
+      - ./cache.env
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -103,4 +103,4 @@ volumes:
   html:
   config:
   data:
-  database:
+  db:

@@ -7,10 +7,6 @@ nextcloud-compose
 
 ```bash
 zfs create \
-    -o mountpoint=/var/lib/docker \
-    tank/docker
-
-zfs create \
     -o mountpoint=/var/lib/nextcloud \
     tank/nextcloud
 
@@ -51,10 +47,20 @@ php occ notify_push:setup https://cloud.example.com/push
 
 ```bash
 # Export
-docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-database pg_dumpall > dump.sql
-docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" database pg_dumpall > dump.sql
+docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-db pg_dumpall > dump.sql
+docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_dumpall > dump.sql
 
 # Import
-docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-database psql < dump.sql
-docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" database psql < dump.sql
+docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-db psql < dump.sql
+docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db psql < dump.sql
+```
+
+## Postgres checksums
+
+```bash
+# Enable checksums
+docker compose run --rm -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_checksums -e
+
+# Check integrity
+docker compose run --rm -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_checksums -c
 ```
