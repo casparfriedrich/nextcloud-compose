@@ -52,7 +52,9 @@ php occ notify_push:setup https://cloud.example.com/push
 ```bash
 # Export
 docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-database pg_dumpall > dump.sql
+docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" database pg_dumpall > dump.sql
 
 # Import
 docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-database psql < dump.sql
+docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" database psql < dump.sql
 ```
