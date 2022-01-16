@@ -71,6 +71,17 @@ services:
       - config:/var/www/html/config
       - data:/var/www/html/data
 
+  cache:
+    build: ./redis
+    container_name: nextcloud-cache
+    env_file:
+      - ./cache.env
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+    image: nextcloud-cache
+    restart: unless-stopped
+
   db:
     build: ./postgres
     container_name: nextcloud-db
@@ -83,17 +94,6 @@ services:
     restart: unless-stopped
     volumes:
       - db:/var/lib/postgresql/data
-
-  cache:
-    build: ./redis
-    container_name: nextcloud-cache
-    env_file:
-      - ./cache.env
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-    image: nextcloud-cache
-    restart: unless-stopped
 
 networks:
   default:
