@@ -53,7 +53,6 @@ services:
       app:
         condition: service_healthy
     environment:
-      - PORT=7867
       - NEXTCLOUD_URL=http://app
     env_file:
       - ./cache.env
