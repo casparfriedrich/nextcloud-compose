@@ -11,6 +11,7 @@ RUN set -e; \
     apt-get update; \
     apt-get install --assume-yes --no-install-recommends \
         imagemagick-6.q16 \
+        jq \
         libmagickcore-6.q16-6-extra \
         procps \
         smbclient \
