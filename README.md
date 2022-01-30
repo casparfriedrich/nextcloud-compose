@@ -35,12 +35,12 @@ zfs create \
 
 ## Configure high performance backend (HPB)
 
-- Add proxy to list of trusted proxies in `config.php`:
+- Add the docker to the list of trusted proxies in `config.php`:
 
 ```bash
 'trusted_proxies' =>
   array (
-    0 => '172.0.0.0/8',
+    0 => '172.17.0.0/16',
   ),
 ```
 
