@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
     stop_signal: SIGWINCH
     volumes:
-      - html:/var/www/html
+      - app:/var/www/html
       - config:/var/www/html/config
       - data:/var/www/html/data
 
@@ -42,7 +42,7 @@ services:
     image: nextcloud-app
     restart: unless-stopped
     volumes:
-      - html:/var/www/html
+      - app:/var/www/html
       - config:/var/www/html/config
       - data:/var/www/html/data
 
@@ -64,7 +64,7 @@ services:
     restart: unless-stopped
     user: www-data
     volumes:
-      - html:/var/www/html
+      - app:/var/www/html
       - config:/var/www/html/config
       - data:/var/www/html/data
 
@@ -97,7 +97,7 @@ networks:
     name: nextcloud
 
 volumes:
-  html:
+  app:
   config:
   data:
   db:
