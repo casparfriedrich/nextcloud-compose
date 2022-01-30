@@ -10,7 +10,21 @@ zfs create \
     -o mountpoint=/var/lib/nextcloud \
     tank/nextcloud
 
-# https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/
+zfs create \
+    -o mountpoint=/var/lib/nextcloud/app \
+    -o compression=zstd \
+    tank/nextcloud/app
+
+zfs create \
+    -o mountpoint=/var/lib/nextcloud/config \
+    -o compression=zstd \
+    tank/nextcloud/config
+
+zfs create \
+    -o mountpoint=/var/lib/nextcloud/data \
+    -o compression=zstd \
+    tank/nextcloud/data
+
 zfs create \
     -o mountpoint=/var/lib/nextcloud/db \
     -o compression=zstd \
