@@ -7,30 +7,26 @@ nextcloud-compose
 
 ```bash
 zfs create \
-    -o mountpoint=/var/lib/nextcloud \
-    tank/nextcloud
-
-zfs create \
     -o mountpoint=/var/lib/nextcloud/app \
     -o compression=zstd \
-    tank/nextcloud/app
+    tank/nc-app
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/config \
     -o compression=zstd \
-    tank/nextcloud/config
+    tank/nc-config
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/data \
     -o compression=zstd \
-    tank/nextcloud/data
+    tank/nc-data
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/db \
     -o compression=zstd \
     -o logbias=throughput \
     -o recordsize=16k \
-    tank/nextcloud/db
+    tank/nc-db
 ```
 
 ## Configure high performance backend (HPB)
