@@ -22,4 +22,5 @@ RUN set -e; \
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
+COPY pm.ini /usr/local/etc/php/conf.d/
 COPY hpb.sh /
