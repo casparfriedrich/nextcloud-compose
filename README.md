@@ -1,9 +1,8 @@
-nextcloud-compose
------------------
+# nextcloud-compose
 
-# Notes
+## Notes
 
-## ZFS
+### ZFS
 
 ```bash
 zfs create \
@@ -29,7 +28,7 @@ zfs create \
     tank/nc-db
 ```
 
-## Configure high performance backend (HPB)
+### Configure high performance backend (HPB)
 
 - Add the docker to the list of trusted proxies in `config.php`:
 
@@ -46,14 +45,14 @@ zfs create \
 php occ notify_push:setup https://cloud.example.com/push
 ```
 
-## Reverse proxy
+### Reverse proxy
 
 ```php
 'overwritehost' => 'cloud.example.com',
 'overwriteprotocol' => 'https',
 ```
 
-## Postgres upgrade via export and (re-)import
+### Postgres upgrade via export and (re-)import
 
 ```bash
 # Export
@@ -65,7 +64,7 @@ docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-db psql
 docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db psql < dump.sql
 ```
 
-## Postgres checksums
+### Postgres checksums
 
 ```bash
 # Enable checksums
