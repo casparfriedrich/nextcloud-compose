@@ -36,7 +36,7 @@ zfs create \
 ```bash
 'trusted_proxies' =>
   array (
-    0 => '172.17.0.0/16',
+    0 => '172.0.0.0/8',
   ),
 ```
 
