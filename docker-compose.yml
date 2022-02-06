@@ -20,6 +20,7 @@ services:
       - ./nextcloud.env
     healthcheck:
       test: ["CMD-SHELL", "curl http://localhost/status.php | jq -e .installed"]
+    hostname: app
     image: nextcloud-app
     ports:
       - 80:80
@@ -40,6 +41,7 @@ services:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
+    hostname: cron
     image: nextcloud-app
     restart: unless-stopped
     volumes:
@@ -59,6 +61,7 @@ services:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
+    hostname: hpb
     image: nextcloud-app
     ports:
       - "7867:7867"
@@ -77,6 +80,7 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
+    hostname: cache
     image: nextcloud-cache
     restart: unless-stopped
 
@@ -88,6 +92,7 @@ services:
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "nextcloud"]
       interval: 5s
+    hostname: db
     image: nextcloud-db
     restart: unless-stopped
     volumes:
