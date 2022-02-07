@@ -16,6 +16,11 @@ zfs create \
     tank/nc-config
 
 zfs create \
+    -o mountpoint=/var/lib/nextcloud/cache \
+    -o compression=zstd \
+    tank/nc-cache
+
+zfs create \
     -o mountpoint=/var/lib/nextcloud/data \
     -o compression=zstd \
     tank/nc-data

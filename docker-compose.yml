@@ -83,6 +83,8 @@ services:
     hostname: cache
     image: nextcloud-cache
     restart: unless-stopped
+    volumes:
+      - cache:/data
 
   db:
     build: ./postgres
@@ -104,6 +106,7 @@ networks:
 
 volumes:
   app:
+  cache:
   config:
   data:
   db:
