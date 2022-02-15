@@ -22,5 +22,9 @@ RUN set -e; \
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
+RUN set -e; \
+    \
+    sed -i 's/^opcache\.interned_strings_buffer.*$/opcache\.interned_strings_buffer=16/g' /usr/local/etc/php/conf.d/opcache-recommended.ini;
+
 COPY pm.ini /usr/local/etc/php/conf.d/
 COPY hpb.sh /
