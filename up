@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+docker compose --project-directory $(dirname $BASH_SOURCE) up --timeout 60 --detach --wait

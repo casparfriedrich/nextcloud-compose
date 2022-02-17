@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-docker compose --project-directory $(dirname $0) exec -d -u www-data app php occ -n $@
+docker compose --project-directory $(dirname $BASH_SOURCE) exec -d -u www-data app php occ -n $@
