@@ -20,6 +20,8 @@ services:
       - ./nextcloud.env
     healthcheck:
       test: ["CMD-SHELL", "curl http://localhost/status.php | jq -e .installed"]
+      interval: 5s
+      start_period: 60s
     hostname: app
     image: nextcloud-app
     ports:
@@ -44,6 +46,7 @@ services:
     hostname: cron
     image: nextcloud-app
     restart: unless-stopped
+    stop_signal: SIGKILL
     volumes:
       - app:/var/www/html
       - config:/var/www/html/config
@@ -66,6 +69,7 @@ services:
     ports:
       - "7867:7867"
     restart: unless-stopped
+    stop_signal: SIGKILL
     user: www-data
     volumes:
       - app:/var/www/html
