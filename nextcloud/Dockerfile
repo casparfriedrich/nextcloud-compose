@@ -25,6 +25,12 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN sed -i 's/^opcache\.interned_strings_buffer.*$/opcache\.interned_strings_buffer=16/g' /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
 RUN { \
+        echo 'opcache.enable_cli=1'; \
+        echo 'opcache.jit=function'; \
+        echo 'opcache.jit_buffer_size=256M'; \
+    } >> /usr/local/etc/php/conf.d/opcache-recommended.ini;
+
+RUN { \
         echo 'pm=ondemand'; \
         echo 'pm.max_children=256'; \
         echo 'pm.start_servers=64'; \
