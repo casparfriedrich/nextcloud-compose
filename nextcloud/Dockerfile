@@ -32,10 +32,7 @@ RUN { \
 
 RUN { \
         echo 'pm=ondemand'; \
-        echo 'pm.max_children=256'; \
-        echo 'pm.start_servers=64'; \
-        echo 'pm.min_spare_servers=64'; \
-        echo 'pm.max_spare_servers=192'; \
+        echo 'pm.max_children=64'; \
     } > /usr/local/etc/php/conf.d/pm.ini
 
 COPY *.sh /
