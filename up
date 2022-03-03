@@ -4,4 +4,4 @@ set -euxo pipefail
 
 PROJECT_DIRECTORY=$(realpath $(dirname $BASH_SOURCE))
 
-docker compose --project-directory $PROJECT_DIRECTORY up --timeout 60 --detach --wait "$@"
+docker compose --project-directory $PROJECT_DIRECTORY up --timeout 300 --detach --wait "$@"

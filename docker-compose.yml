@@ -27,7 +27,6 @@ services:
     ports:
       - 80:80
     restart: unless-stopped
-    stop_signal: SIGWINCH
     volumes:
       - app:/var/www/html
       - config:/var/www/html/config
