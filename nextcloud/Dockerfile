@@ -31,8 +31,8 @@ RUN { \
     } >> /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
 RUN { \
-        echo 'pm=ondemand'; \
-        echo 'pm.max_children=64'; \
+        echo 'pm=static'; \
+        echo 'pm.max_children=16'; \
     } > /usr/local/etc/php/conf.d/pm.ini
 
 COPY *.sh /
