@@ -8,39 +8,39 @@
 zfs create \
     -o mountpoint=/var/lib/nextcloud/app \
     -o compression=zstd \
-    tank/nc-app
+    tank/nextcloud-app
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/config \
     -o compression=zstd \
-    tank/nc-config
+    tank/nextcloud-config
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/cache \
     -o compression=zstd \
-    tank/nc-cache
+    tank/nextcloud-cache
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/data \
     -o compression=zstd \
-    tank/nc-data
+    tank/nextcloud-data
 
 zfs create \
     -o mountpoint=/var/lib/nextcloud/db \
     -o compression=zstd \
     -o logbias=throughput \
     -o recordsize=16k \
-    tank/nc-db
+    tank/nextcloud-db
 ```
 
 ### Configure high performance backend (HPB)
 
-- Add the docker to the list of trusted proxies in `config.php`:
+- Add the docker network to the list of trusted proxies in `config.php`:
 
 ```bash
 'trusted_proxies' =>
   array (
-    0 => '172.0.0.0/8',
+    0 => '172.16.0.0/12',
   ),
 ```
 
