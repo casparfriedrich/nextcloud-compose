@@ -19,7 +19,7 @@ services:
       - ./db.env
       - ./nextcloud.env
     healthcheck:
-      test: ["CMD-SHELL", "curl http://localhost/status.php | jq -e .installed"]
+      test: ["CMD-SHELL", "curl http://localhost/status.php | jq -e '.installed == true and .maintenance == false'"]
       interval: 5s
       start_period: 60s
     hostname: app
