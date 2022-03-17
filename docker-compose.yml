@@ -102,7 +102,3 @@ services:
     restart: unless-stopped
     volumes:
       - /var/lib/nextcloud/db:/var/lib/postgresql/data
-
-networks:
-  default:
-    name: nextcloud
