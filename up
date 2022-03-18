@@ -4,4 +4,4 @@ set -euxo pipefail
 
 PROJECT_DIRECTORY=$(realpath $(dirname $BASH_SOURCE))
 
-docker compose --project-directory $PROJECT_DIRECTORY up --timeout 300 --detach --wait "$@"
+docker compose --project-name "nextcloud" --project-directory $PROJECT_DIRECTORY up --timeout 300 --wait --detach "$@"
