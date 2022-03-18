@@ -3,7 +3,6 @@ version: '3.9'
 services:
   app:
     build: ./nextcloud
-    container_name: nextcloud-app
     depends_on:
       cache:
         condition: service_healthy
@@ -33,7 +32,6 @@ services:
       - /var/lib/nextcloud/data:/var/www/html/data
 
   cron:
-    container_name: nextcloud-cron
     entrypoint: ["/cron.sh"]
     depends_on:
       app:
@@ -52,7 +50,6 @@ services:
       - /var/lib/nextcloud/data:/var/www/html/data
 
   hpb:
-    container_name: nextcloud-hpb
     entrypoint: ["/hpb.sh"]
     depends_on:
       app:
@@ -77,7 +74,6 @@ services:
 
   cache:
     build: ./redis
-    container_name: nextcloud-cache
     env_file:
       - ./cache.env
     healthcheck:
@@ -91,7 +87,6 @@ services:
 
   db:
     build: ./postgres
-    container_name: nextcloud-db
     env_file:
       - ./db.env
     healthcheck:
