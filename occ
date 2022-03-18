@@ -2,6 +2,6 @@
 
 set -euxo pipefail
 
-PROJECT_DIRECTORY=$(realpath $(dirname $BASH_SOURCE))
+export COMPOSE_PROJECT_NAME=nextcloud
 
-docker compose --project-directory $PROJECT_DIRECTORY exec --user www-data app php occ "$@"
+docker compose exec --user www-data app php occ "$@"

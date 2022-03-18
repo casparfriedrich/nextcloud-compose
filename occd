@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -euxo pipefail
-
-PROJECT_DIRECTORY=$(realpath $(dirname $BASH_SOURCE))
-
-docker compose --project-directory $PROJECT_DIRECTORY exec --detach --user www-data app php occ --no-interaction "$@"
