@@ -2,8 +2,6 @@
 
 set -euxo pipefail
 
-export COMPOSE_PROJECT_NAME=nextcloud
-
 up () { docker compose up --timeout 300 --wait; }
 down () { docker compose down --timeout 300; }
 
