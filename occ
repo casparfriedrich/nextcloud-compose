@@ -2,6 +2,4 @@
 
 set -euxo pipefail
 
-export COMPOSE_PROJECT_NAME=nextcloud
-
 docker compose exec --user www-data app php occ "$@"
