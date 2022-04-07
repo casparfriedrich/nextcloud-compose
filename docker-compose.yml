@@ -56,6 +56,7 @@ services:
         condition: service_healthy
     environment:
       - NEXTCLOUD_URL=http://app
+      - PORT=52191
     env_file:
       - ./cache.env
       - ./db.env
@@ -63,7 +64,7 @@ services:
     hostname: hpb
     image: nextcloud-app
     ports:
-      - "52191:7867"
+      - "52191:52191"
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
