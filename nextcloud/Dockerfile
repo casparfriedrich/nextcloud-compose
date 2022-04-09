@@ -11,12 +11,14 @@ RUN set -e; \
     \
     apt-get update; \
     apt-get install --assume-yes --no-install-recommends \
-        imagemagick \
         jq \
+        libmagickcore-6.q16-6 \
+        libmagickcore-6.q16-6-extra \
+        neovim \
         procps \
         smbclient \
         supervisor \
-        neovim \
+
     ; \
     rm -rf /var/lib/apt/lists/*
 
