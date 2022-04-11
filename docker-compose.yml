@@ -32,10 +32,10 @@ services:
       - /var/lib/nextcloud/data:/var/www/html/data
 
   cron:
-    entrypoint: ["/cron.sh"]
     depends_on:
       app:
         condition: service_healthy
+    entrypoint: ["/cron.sh"]
     env_file:
       - ./cache.env
       - ./db.env
@@ -50,17 +50,17 @@ services:
       - /var/lib/nextcloud/data:/var/www/html/data
 
   hpb:
-    entrypoint: ["/hpb.sh"]
     depends_on:
       app:
         condition: service_healthy
-    environment:
-      - NEXTCLOUD_URL=http://app
-      - PORT=52191
+    entrypoint: ["/hpb.sh"]
     env_file:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
+    environment:
+      - NEXTCLOUD_URL=http://app
+      - PORT=52191
     hostname: hpb
     image: nextcloud-app
     ports:
