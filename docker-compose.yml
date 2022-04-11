@@ -11,20 +11,14 @@ services:
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
       - NEXTCLOUD_ADMIN_PASSWORD=admin
-      - NEXTCLOUD_TRUSTED_DOMAINS=app # Append your domain here
+      - NEXTCLOUD_TRUSTED_DOMAINS=webserver # Append your domain here
       - TRUSTED_PROXIES=172.16.0.0/12
     env_file:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
-    healthcheck:
-      test: ["CMD-SHELL", "curl http://localhost/status.php | jq -e '.installed == true and .maintenance == false'"]
-      interval: 5s
-      start_period: 60s
     hostname: app
     image: nextcloud-app
-    ports:
-      - "55181:80"
     restart: unless-stopped
     volumes:
       - /var/lib/nextcloud/app:/var/www/html
@@ -34,13 +28,12 @@ services:
   cron:
     depends_on:
       app:
-        condition: service_healthy
+        condition: service_started
     entrypoint: ["/cron.sh"]
     env_file:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
-    hostname: cron
     image: nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
@@ -51,17 +44,16 @@ services:
 
   hpb:
     depends_on:
-      app:
-        condition: service_healthy
+      webserver:
+        condition: service_started
     entrypoint: ["/hpb.sh"]
     env_file:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
     environment:
-      - NEXTCLOUD_URL=http://app
+      - NEXTCLOUD_URL=http://webserver
       - PORT=52191
-    hostname: hpb
     image: nextcloud-app
     ports:
       - "52191:52191"
@@ -73,6 +65,17 @@ services:
       - /var/lib/nextcloud/config:/var/www/html/config
       - /var/lib/nextcloud/data:/var/www/html/data
 
+  webserver:
+    build: ./nginx
+    depends_on:
+      app:
+        condition: service_started
+    ports:
+      - "55181:80"
+    restart: unless-stopped
+    volumes:
+      - /var/lib/nextcloud/app:/var/www/html
+
   cache:
     build: ./redis
     env_file:
@@ -80,8 +83,6 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
-    hostname: cache
-    image: nextcloud-cache
     restart: unless-stopped
     volumes:
       - /var/lib/nextcloud/cache:/data
@@ -93,8 +94,6 @@ services:
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "nextcloud"]
       interval: 5s
-    hostname: db
-    image: nextcloud-db
     restart: unless-stopped
     volumes:
       - /var/lib/nextcloud/db:/var/lib/postgresql/data

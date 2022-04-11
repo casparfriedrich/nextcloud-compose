@@ -1,6 +1,4 @@
-FROM nextcloud:23.0-apache
-
-ARG DEBIAN_FRONTEND=noninteractive
+FROM nextcloud:23.0-fpm-alpine
 
 ENV APACHE_DISABLE_REWRITE_IP=1
 ENV LANG C.UTF-8
@@ -9,18 +7,13 @@ ENV NEXTCLOUD_UPDATE=1
 
 RUN set -e; \
     \
-    apt-get update; \
-    apt-get install --assume-yes --no-install-recommends \
-        jq \
-        libmagickcore-6.q16-6 \
-        libmagickcore-6.q16-6-extra \
+    apk update; \
+    apk add \
+        bash \
+        imagemagick \
         neovim \
-        procps \
-        smbclient \
-        supervisor \
-
-    ; \
-    rm -rf /var/lib/apt/lists/*
+        samba \
+    ;
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
@@ -32,17 +25,17 @@ RUN { \
         echo 'opcache.jit_buffer_size=256M'; \
     } >> /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
-RUN { \
-        echo 'max_input_time=3600'; \
-        echo 'max_execution_time=3600'; \
-    } > /usr/local/etc/php/conf.d/large_file_upload.ini;
+# RUN { \
+#         echo 'max_input_time=3600'; \
+#         echo 'max_execution_time=3600'; \
+#     } > /usr/local/etc/php/conf.d/large_file_upload.ini;
 
-RUN { \
-        echo 'pm=dynamic'; \
-        echo 'pm.max_children=64'; \
-        echo 'pm.start_servers=16'; \
-        echo 'pm.min_spare_servers=8'; \
-        echo 'pm.max_spare_servers=16'; \
-    } > /usr/local/etc/php/conf.d/pm.ini
+# RUN { \
+#         echo 'pm=dynamic'; \
+#         echo 'pm.max_children=64'; \
+#         echo 'pm.start_servers=16'; \
+#         echo 'pm.min_spare_servers=8'; \
+#         echo 'pm.max_spare_servers=16'; \
+#     } > /usr/local/etc/php/conf.d/pm.ini
 
 COPY *.sh /
