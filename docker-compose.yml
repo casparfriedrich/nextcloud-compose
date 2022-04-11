@@ -74,7 +74,7 @@ services:
       - "55181:80"
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/app:/var/www/html
+      - /var/lib/nextcloud/app:/var/www/html:ro
 
   cache:
     build: ./redis
