@@ -30,7 +30,7 @@ RUN { \
 #         echo 'max_execution_time=3600'; \
 #     } > /usr/local/etc/php/conf.d/large_file_upload.ini;
 
-RUN sed -i 's/^pm = .*$/pm = static/g' /usr/local/etc/php-fpm.d/www.conf;
+RUN sed -i 's/^pm = .*$/pm = dynamic/g' /usr/local/etc/php-fpm.d/www.conf;
 RUN sed -i 's/^pm.max_children = .*$/pm.max_children = 64/g' /usr/local/etc/php-fpm.d/www.conf;
 RUN sed -i 's/^pm.start_servers = .*$/pm.start_servers = 16/g' /usr/local/etc/php-fpm.d/www.conf;
 RUN sed -i 's/^pm.min_spare_servers = .*$/pm.min_spare_servers = 8/g' /usr/local/etc/php-fpm.d/www.conf;
