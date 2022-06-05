@@ -44,6 +44,8 @@ services:
 
   hpb:
     depends_on:
+      app:
+        condition: service_started
       webserver:
         condition: service_started
     entrypoint: ["/hpb.sh"]
