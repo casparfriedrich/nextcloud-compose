@@ -1,4 +1,4 @@
-FROM nginx:1.21-alpine
+FROM nginx:1.23-alpine
 
 ADD https://raw.githubusercontent.com/h5bp/server-configs-nginx/4.2.0/h5bp/media_types/character_encodings.conf /etc/nginx/
 ADD https://raw.githubusercontent.com/h5bp/server-configs-nginx/4.2.0/h5bp/media_types/media_types.conf /etc/nginx/
