@@ -17,6 +17,9 @@ services:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
+    healthcheck:
+      test: sudo -u www-data sh -c "PHP_MEMORY_LIMIT=1G php /var/www/html/occ status --output=json | jq -e 'select(.installed==true and .maintenance==false)'" || exit 1
+      start_period: 60s
     hostname: app
     image: nextcloud-app
     restart: unless-stopped
@@ -28,7 +31,7 @@ services:
   cron:
     depends_on:
       app:
-        condition: service_started
+        condition: service_healthy
     entrypoint: ["/cron.sh"]
     env_file:
       - ./cache.env
@@ -45,7 +48,7 @@ services:
   hpb:
     depends_on:
       app:
-        condition: service_started
+        condition: service_healthy
       webserver:
         condition: service_started
     entrypoint: ["/hpb.sh"]
@@ -83,7 +86,7 @@ services:
     env_file:
       - ./cache.env
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: redis-cli ping || exit 1
       interval: 5s
     restart: unless-stopped
     volumes:
@@ -94,7 +97,7 @@ services:
     env_file:
       - ./db.env
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "nextcloud"]
+      test: pg_isready -U nextcloud || exit 1
       interval: 5s
     restart: unless-stopped
     volumes:

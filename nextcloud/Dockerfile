@@ -10,8 +10,10 @@ RUN set -e; \
     apk add \
         bash \
         imagemagick \
+        jq \
         neovim \
         samba \
+        sudo \
     ;
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
