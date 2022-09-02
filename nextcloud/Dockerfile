@@ -14,6 +14,7 @@ RUN set -e; \
         neovim \
         samba \
         sudo \
+        tesseract-ocr \
     ;
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
