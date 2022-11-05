@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 
 services:
   app:
@@ -41,10 +41,8 @@ services:
     image: nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
-    volumes:
-      - /var/lib/nextcloud/app:/var/www/html
-      - /var/lib/nextcloud/config:/var/www/html/config
-      - /var/lib/nextcloud/data:/var/www/html/data
+    volumes_from:
+      - app
 
   hpb:
     depends_on:
@@ -66,10 +64,8 @@ services:
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
-    volumes:
-      - /var/lib/nextcloud/app:/var/www/html
-      - /var/lib/nextcloud/config:/var/www/html/config
-      - /var/lib/nextcloud/data:/var/www/html/data
+    volumes_from:
+      - app
 
   webserver:
     build: ./nginx
