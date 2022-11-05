@@ -17,8 +17,6 @@ RUN set -e; \
         tesseract-ocr \
     ;
 
-RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-
 RUN sed -i 's/^opcache\.interned_strings_buffer.*$/opcache\.interned_strings_buffer=16/g' /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
 RUN { \
