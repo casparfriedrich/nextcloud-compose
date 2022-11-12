@@ -93,14 +93,41 @@ location / {
 
 ### Postgres upgrade via export and (re-)import
 
-```bash
-# Export
-docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-db pg_dumpall > dump.sql
-docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_dumpall > dump.sql
+1. Shutdown Nextcloud
 
-# Import
-docker exec -i -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" nextcloud-db psql < dump.sql
+```bash
+./down
+```
+
+2. Dump database
+
+```bash
+docker compose up -d db
+docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_dumpall > dump.sql
+docker compose down
+```
+
+3. Upgrade container
+
+```bash
+zfs set mountpoint=none pool-1/nextcloud-db
+zfs rename pool-1/nextcloud-db pool-1/nextcloud-db-old
+zfs create -o mountpoint=/var/lib/nextcloud/db -o compression=zstd -o logbias=throughput -o recordsize=16k pool-1/nextcloud-db
+# zfs destroy pool-1/nextcloud-db-old
+```
+
+4. Restore database
+
+```bash
+docker compose up -d db
 docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db psql < dump.sql
+docker compose down
+```
+
+5. Start Nextcloud
+
+```bash
+./up
 ```
 
 ### Postgres checksums
