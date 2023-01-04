@@ -86,8 +86,8 @@ services:
       test: redis-cli ping || exit 1
       interval: 5s
     restart: unless-stopped
-    volumes:
-      - /var/lib/nextcloud/cache:/data
+    tmpfs:
+      - /data
 
   db:
     build: ./postgres
