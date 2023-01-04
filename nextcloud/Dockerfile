@@ -1,4 +1,4 @@
-FROM nextcloud:24.0-fpm-alpine
+FROM nextcloud:25.0-fpm-alpine
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
