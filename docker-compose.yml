@@ -28,6 +28,7 @@ services:
       - /var/lib/nextcloud/app:/var/www/html
       - /var/lib/nextcloud/config:/var/www/html/config
       - /var/lib/nextcloud/data:/var/www/html/data
+      - stuff:/mnt/stuff
 
   cron:
     depends_on:
@@ -99,3 +100,10 @@ services:
     restart: unless-stopped
     volumes:
       - /var/lib/nextcloud/db:/var/lib/postgresql/data
+
+volumes:
+  stuff:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.178.201,rw,nfsvers=4.2"
+      device: ":/pool-0/nc-stuff"
