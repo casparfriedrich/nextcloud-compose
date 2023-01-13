@@ -6,14 +6,25 @@ ENV NEXTCLOUD_UPDATE=1
 
 RUN apk update && \
     apk add \
+        alpine-sdk \
+        autoconf \
         bash \
         imagemagick \
+        inotify-tools \
         jq \
         neovim \
         samba \
         sudo \
         tesseract-ocr \
         ;
+
+RUN pecl install \
+    inotify \
+    ;
+
+RUN docker-php-ext-enable \
+    inotify \
+    ;
 
 RUN sed -i 's/^opcache\.interned_strings_buffer.*$/opcache\.interned_strings_buffer=16/g' /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
