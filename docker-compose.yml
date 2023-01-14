@@ -25,10 +25,10 @@ services:
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime
-      - /var/lib/nextcloud/app:/var/www/html
-      - /var/lib/nextcloud/config:/var/www/html/config
-      - /var/lib/nextcloud/data:/var/www/html/data
-      - stuff:/mnt/stuff
+      - /pool-1/nc-app:/var/www/html
+      - /pool-1/nc-config:/var/www/html/config
+      - /pool-1/nc-data:/var/www/html/data
+      - /pool-0/nc-stuff:/mnt/stuff
 
   cron:
     depends_on:
@@ -77,7 +77,7 @@ services:
       - "55181:80"
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/app:/var/www/html:ro
+      - /pool-1/nc-app:/var/www/html:ro
 
   cache:
     build: ./redis
@@ -99,11 +99,4 @@ services:
       interval: 5s
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/db:/var/lib/postgresql/data
-
-volumes:
-  stuff:
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.178.201,rw,nfsvers=4.2"
-      device: ":/pool-0/nc-stuff"
+      - /pool-1/nc-db:/var/lib/postgresql/data
