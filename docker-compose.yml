@@ -17,11 +17,13 @@ services:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
-    healthcheck:
-      test: sudo -u www-data sh -c "PHP_MEMORY_LIMIT=1G php /var/www/html/occ status --output=json | jq -e 'select(.installed==true and .maintenance==false)'" || exit 1
-      start_period: 60s
+    # healthcheck:
+    #   test: sudo -u www-data sh -c "PHP_MEMORY_LIMIT=1G php /var/www/html/occ status --output=json | jq -e 'select(.installed==true and .maintenance==false)'" || exit 1
+    #   start_period: 60s
     hostname: app
     image: nextcloud-app
+    ports:
+      - "55181:80"
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime
@@ -32,7 +34,7 @@ services:
   cron:
     depends_on:
       app:
-        condition: service_healthy
+        condition: service_started
     entrypoint: ["/cron.sh"]
     env_file:
       - ./cache.env
@@ -44,39 +46,39 @@ services:
     volumes_from:
       - app
 
-  hpb:
-    depends_on:
-      app:
-        condition: service_healthy
-      webserver:
-        condition: service_started
-    entrypoint: ["/hpb.sh"]
-    env_file:
-      - ./cache.env
-      - ./db.env
-      - ./nextcloud.env
-    environment:
-      - NEXTCLOUD_URL=http://webserver
-      - PORT=52191
-    image: nextcloud-app
-    ports:
-      - "52191:52191"
-    restart: unless-stopped
-    stop_signal: SIGKILL
-    user: www-data
-    volumes_from:
-      - app
+  # hpb:
+  #   depends_on:
+  #     app:
+  #       condition: service_healthy
+  #     # webserver:
+  #     #   condition: service_started
+  #   entrypoint: ["/hpb.sh"]
+  #   env_file:
+  #     - ./cache.env
+  #     - ./db.env
+  #     - ./nextcloud.env
+  #   environment:
+  #     - NEXTCLOUD_URL=http://webserver
+  #     - PORT=52191
+  #   image: nextcloud-app
+  #   ports:
+  #     - "52191:52191"
+  #   restart: unless-stopped
+  #   stop_signal: SIGKILL
+  #   user: www-data
+  #   volumes_from:
+  #     - app
 
-  webserver:
-    build: ./nginx
-    depends_on:
-      app:
-        condition: service_started
-    ports:
-      - "55181:80"
-    restart: unless-stopped
-    volumes:
-      - /pool-1/nc-app:/var/www/html:ro
+  # webserver:
+  #   build: ./nginx
+  #   depends_on:
+  #     app:
+  #       condition: service_started
+  #   ports:
+  #     - "55181:80"
+  #   restart: unless-stopped
+  #   volumes:
+  #     - app:/var/www/html:ro
 
   cache:
     build: ./redis

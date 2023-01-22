@@ -1,32 +1,22 @@
-FROM nextcloud:25.0-fpm-alpine
+FROM nextcloud:25.0
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-ENV NEXTCLOUD_UPDATE=1
-
-RUN apk update && \
-    apk add \
-        alpine-sdk \
-        autoconf \
-        bash \
+RUN apt-get -y update && \
+    apt-get -y install \
         imagemagick \
         inotify-tools \
-        jq \
         neovim \
-        samba \
-        sudo \
-        tesseract-ocr \
+        libsmbclient-dev \
         ;
 
 RUN pecl install \
     inotify \
+    smbclient \
     ;
 
 RUN docker-php-ext-enable \
     inotify \
+    smbclient \
     ;
-
-RUN sed -i 's/^opcache\.interned_strings_buffer.*$/opcache\.interned_strings_buffer=16/g' /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
 RUN { \
         echo 'opcache.enable_cli=1'; \
@@ -34,10 +24,12 @@ RUN { \
         echo 'opcache.jit_buffer_size=256M'; \
     } >> /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
-RUN sed -i 's/^pm = .*$/pm = dynamic/g' /usr/local/etc/php-fpm.d/www.conf;
-RUN sed -i 's/^pm.max_children = .*$/pm.max_children = 64/g' /usr/local/etc/php-fpm.d/www.conf;
-RUN sed -i 's/^pm.start_servers = .*$/pm.start_servers = 16/g' /usr/local/etc/php-fpm.d/www.conf;
-RUN sed -i 's/^pm.min_spare_servers = .*$/pm.min_spare_servers = 8/g' /usr/local/etc/php-fpm.d/www.conf;
-RUN sed -i 's/^pm.max_spare_servers = .*$/pm.max_spare_servers = 16/g' /usr/local/etc/php-fpm.d/www.conf;
+RUN { \
+        echo 'pm = dynamic'; \
+        echo 'pm.max_children = 64'; \
+        echo 'pm.start_servers = 16'; \
+        echo 'pm.max_spare_servers = 16'; \
+        echo 'pm.min_spare_servers = 8'; \
+    } >> /usr/local/etc/php/conf.d/pm.ini;
 
 COPY *.sh /
