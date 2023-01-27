@@ -17,9 +17,6 @@ services:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
-    # healthcheck:
-    #   test: sudo -u www-data sh -c "PHP_MEMORY_LIMIT=1G php /var/www/html/occ status --output=json | jq -e 'select(.installed==true and .maintenance==false)'" || exit 1
-    #   start_period: 60s
     hostname: app
     image: nextcloud-app
     ports:
@@ -46,39 +43,25 @@ services:
     volumes_from:
       - app
 
-  # hpb:
-  #   depends_on:
-  #     app:
-  #       condition: service_healthy
-  #     # webserver:
-  #     #   condition: service_started
-  #   entrypoint: ["/hpb.sh"]
-  #   env_file:
-  #     - ./cache.env
-  #     - ./db.env
-  #     - ./nextcloud.env
-  #   environment:
-  #     - NEXTCLOUD_URL=http://webserver
-  #     - PORT=52191
-  #   image: nextcloud-app
-  #   ports:
-  #     - "52191:52191"
-  #   restart: unless-stopped
-  #   stop_signal: SIGKILL
-  #   user: www-data
-  #   volumes_from:
-  #     - app
-
-  # webserver:
-  #   build: ./nginx
-  #   depends_on:
-  #     app:
-  #       condition: service_started
-  #   ports:
-  #     - "55181:80"
-  #   restart: unless-stopped
-  #   volumes:
-  #     - app:/var/www/html:ro
+  hpb:
+    depends_on:
+      app:
+        condition: service_started
+    entrypoint: ["/hpb.sh"]
+    env_file:
+      - ./cache.env
+      - ./db.env
+      - ./nextcloud.env
+    environment:
+      - NEXTCLOUD_URL=http://app
+    image: nextcloud-app
+    ports:
+      - "52191:7867"
+    restart: unless-stopped
+    stop_signal: SIGKILL
+    user: www-data
+    volumes_from:
+      - app
 
   cache:
     build: ./redis
