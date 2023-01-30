@@ -11,7 +11,7 @@ services:
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
       - NEXTCLOUD_ADMIN_PASSWORD=admin
-      - NEXTCLOUD_TRUSTED_DOMAINS=webserver # Append your domain here
+      - NEXTCLOUD_TRUSTED_DOMAINS=app # Append your domain here
       - TRUSTED_PROXIES=172.16.0.0/12
     env_file:
       - ./cache.env
