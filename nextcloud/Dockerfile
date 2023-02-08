@@ -6,6 +6,7 @@ RUN apt-get -y update && \
         inotify-tools \
         neovim \
         libsmbclient-dev \
+        smbclient \
         ;
 
 RUN pecl install \
