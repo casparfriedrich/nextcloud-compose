@@ -10,14 +10,14 @@ RUN apt-get -y update && \
         ;
 
 RUN pecl install \
-    inotify \
-    smbclient \
-    ;
+        inotify \
+        smbclient \
+        ;
 
 RUN docker-php-ext-enable \
-    inotify \
-    smbclient \
-    ;
+        inotify \
+        smbclient \
+        ;
 
 RUN { \
         echo 'opcache.enable_cli=1'; \

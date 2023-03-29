@@ -43,11 +43,11 @@ services:
     volumes_from:
       - app
 
-  hpb:
+  notify_push:
     depends_on:
       app:
         condition: service_started
-    entrypoint: ["/hpb.sh"]
+    entrypoint: ["/notify_push.sh"]
     env_file:
       - ./cache.env
       - ./db.env
@@ -57,6 +57,22 @@ services:
     image: nextcloud-app
     ports:
       - "52191:7867"
+    restart: unless-stopped
+    stop_signal: SIGKILL
+    user: www-data
+    volumes_from:
+      - app
+
+  previewgenerator:
+    depends_on:
+      app:
+        condition: service_started
+    entrypoint: ["/previewgenerator.sh"]
+    env_file:
+      - ./cache.env
+      - ./db.env
+      - ./nextcloud.env
+    image: nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
