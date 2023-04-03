@@ -86,7 +86,7 @@ services:
     environment:
       - MALLOC_ARENA_MAX=2
     healthcheck:
-      test: curl -f 127.0.0.1:9000/
+      test: curl -f 127.0.0.1:9000/health
     restart: unless-stopped
 
   cache:
