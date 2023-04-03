@@ -19,6 +19,8 @@ services:
       - ./cache.env
       - ./db.env
       - ./nextcloud.env
+    healthcheck:
+      test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false)'
     hostname: app
     image: nextcloud-app
     ports:
@@ -33,7 +35,7 @@ services:
   cron:
     depends_on:
       app:
-        condition: service_started
+        condition: service_healthy
     entrypoint: ["/cron.sh"]
     env_file:
       - ./cache.env
@@ -48,7 +50,7 @@ services:
   notify_push:
     depends_on:
       app:
-        condition: service_started
+        condition: service_healthy
     entrypoint: ["/notify_push.sh"]
     env_file:
       - ./cache.env
@@ -68,7 +70,7 @@ services:
   previewgenerator:
     depends_on:
       app:
-        condition: service_started
+        condition: service_healthy
     entrypoint: ["/previewgenerator.sh"]
     env_file:
       - ./cache.env
@@ -86,7 +88,7 @@ services:
     environment:
       - MALLOC_ARENA_MAX=2
     healthcheck:
-      test: curl -f 127.0.0.1:9000/health
+      test: curl -sSf http://localhost:9000/health
     restart: unless-stopped
 
   cache:

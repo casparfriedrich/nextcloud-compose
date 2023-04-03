@@ -4,8 +4,9 @@ RUN apt-get -y update && \
     apt-get -y install \
         imagemagick \
         inotify-tools \
-        neovim \
+        jq \
         libsmbclient-dev \
+        neovim \
         smbclient \
         ;
 

@@ -2,11 +2,14 @@
 
 set -euxo pipefail
 
-/var/www/html/occ check
+APP_LIST=$(/var/www/html/occ app:list --output=json)
 
-if ! /var/www/html/occ app:getpath notify_push; then
-	/var/www/html/occ app:install notify_push
-	/var/www/html/occ app:enable notify_push
+if jq -e '.disabled | has("notify_push")' <<< $APP_LIST; then
+	exit 1
 fi
 
-exec `/var/www/html/occ app:getpath notify_push`/bin/`uname -m`/notify_push ./config/config.php
+if ! jq -e '.enabled | has("notify_push")' <<< $APP_LIST; then
+	/var/www/html/occ app:install notify_push
+fi
+
+exec `/var/www/html/occ app:getpath notify_push`/bin/`uname -m`/notify_push /var/www/html/config/config.php

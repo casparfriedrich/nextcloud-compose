@@ -2,11 +2,14 @@
 
 set -euxo pipefail
 
-/var/www/html/occ check
+APP_LIST=$(/var/www/html/occ app:list --output=json)
 
-if ! /var/www/html/occ app:getpath previewgenerator; then
+if jq -e '.disabled | has("previewgenerator")' <<< $APP_LIST; then
+	exit 1
+fi
+
+if ! jq -e '.enabled | has("previewgenerator")' <<< $APP_LIST; then
 	/var/www/html/occ app:install previewgenerator
-	/var/www/html/occ app:enable previewgenerator
 fi
 
 while true
