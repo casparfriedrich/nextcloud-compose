@@ -79,6 +79,10 @@ services:
     volumes_from:
       - app
 
+  imaginary:
+    image: h2non/imaginary:1.2
+    command: -enable-url-source
+
   cache:
     build: ./redis
     env_file:
