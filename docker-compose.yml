@@ -9,7 +9,7 @@ services:
       db:
         condition: service_healthy
       imaginary:
-        condition: service_started
+        condition: service_healthy
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
       - NEXTCLOUD_ADMIN_PASSWORD=admin
@@ -82,8 +82,11 @@ services:
       - app
 
   imaginary:
-    command: -enable-url-source
-    image: h2non/imaginary:1.2
+    build: ./imaginary
+    environment:
+      - MALLOC_ARENA_MAX=2
+    healthcheck:
+      test: curl -f 127.0.0.1:9000/
     restart: unless-stopped
 
   cache:
@@ -92,7 +95,6 @@ services:
       - ./cache.env
     healthcheck:
       test: redis-cli ping || exit 1
-      interval: 5s
     restart: unless-stopped
     tmpfs:
       - /data
@@ -103,7 +105,6 @@ services:
       - ./db.env
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
-      interval: 5s
     restart: unless-stopped
     volumes:
       - /pool-1/nc-db:/var/lib/postgresql/data
