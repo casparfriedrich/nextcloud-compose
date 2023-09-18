@@ -1,4 +1,4 @@
-FROM postgres:15.3-alpine
+FROM postgres:15.4-alpine
 
 RUN apk add --no-cache --update \
     musl \
