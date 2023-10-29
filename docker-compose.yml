@@ -30,7 +30,7 @@ services:
       - /etc/localtime:/etc/localtime
       - /pool-1/nc-app:/var/www/html
       - /pool-1/nc-config:/var/www/html/config
-      - /pool-1/nc-data:/var/www/html/data
+      - /pool-0/nc-data:/var/www/html/data
 
   cron:
     depends_on:
