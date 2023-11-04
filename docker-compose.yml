@@ -109,4 +109,4 @@ services:
       test: pg_isready -U nextcloud || exit 1
     restart: unless-stopped
     volumes:
-      - /pool-0/nc-db:/var/lib/postgresql/data
+      - /pool-1/nc-db:/var/lib/postgresql/data
