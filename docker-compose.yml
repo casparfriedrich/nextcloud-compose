@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime
-      - /pool-1/nc-app:/var/www/html
+      - /pool-0/nc-app:/var/www/html
       - /pool-0/nc-config:/var/www/html/config
       - /pool-0/nc-data:/var/www/html/data
 
@@ -109,4 +109,4 @@ services:
       test: pg_isready -U nextcloud || exit 1
     restart: unless-stopped
     volumes:
-      - /pool-1/nc-db:/var/lib/postgresql/data
+      - /pool-0/nc-db:/var/lib/postgresql/data
