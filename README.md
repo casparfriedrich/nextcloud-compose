@@ -103,7 +103,7 @@ location / {
 
 ```bash
 docker compose up -d db
-docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_dumpall > dump.sql
+docker compose exec -T -e PGUSER="nextcloud" -e PGPASSWORD="nextcloud" db pg_dumpall --no-role-passwords > dump.sql
 docker compose down
 ```
 

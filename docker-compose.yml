@@ -16,7 +16,6 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=app # Append your domain here
       - TRUSTED_PROXIES=172.16.0.0/12
     env_file:
-      - ./db.env
       - ./nextcloud.env
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false)'
@@ -37,7 +36,6 @@ services:
         condition: service_healthy
     entrypoint: ["/cron.sh"]
     env_file:
-      - ./db.env
       - ./nextcloud.env
     image: nextcloud-app
     restart: unless-stopped
@@ -51,7 +49,6 @@ services:
         condition: service_healthy
     entrypoint: ["/notify_push.sh"]
     env_file:
-      - ./db.env
       - ./nextcloud.env
     environment:
       - NEXTCLOUD_URL=http://app
@@ -70,7 +67,6 @@ services:
         condition: service_healthy
     entrypoint: ["/previewgenerator.sh"]
     env_file:
-      - ./db.env
       - ./nextcloud.env
     image: nextcloud-app
     restart: unless-stopped
@@ -98,11 +94,16 @@ services:
     restart: unless-stopped
 
   db:
-    build: ./postgres
-    env_file:
-      - ./db.env
+    image: bitnami/postgresql:16
+    environment:
+      - POSTGRESQL_DATABASE=nextcloud
+      - POSTGRESQL_PASSWORD=nextcloud
+      - POSTGRESQL_USERNAME=nextcloud
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
     restart: unless-stopped
     volumes:
-      - /pool-1/nc-db:/var/lib/postgresql/data
+      - /pool-1/nc-db:/bitnami/postgresql
+    tmpfs:
+      - /docker-entrypoint-preinitdb.d
+      - /docker-entrypoint-initdb.d
