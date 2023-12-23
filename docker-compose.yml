@@ -16,7 +16,6 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=app # Append your domain here
       - TRUSTED_PROXIES=172.16.0.0/12
     env_file:
-      - ./cache.env
       - ./db.env
       - ./nextcloud.env
     healthcheck:
@@ -38,7 +37,6 @@ services:
         condition: service_healthy
     entrypoint: ["/cron.sh"]
     env_file:
-      - ./cache.env
       - ./db.env
       - ./nextcloud.env
     image: nextcloud-app
@@ -53,7 +51,6 @@ services:
         condition: service_healthy
     entrypoint: ["/notify_push.sh"]
     env_file:
-      - ./cache.env
       - ./db.env
       - ./nextcloud.env
     environment:
@@ -73,7 +70,6 @@ services:
         condition: service_healthy
     entrypoint: ["/previewgenerator.sh"]
     env_file:
-      - ./cache.env
       - ./db.env
       - ./nextcloud.env
     image: nextcloud-app
@@ -92,14 +88,14 @@ services:
     restart: unless-stopped
 
   cache:
-    build: ./redis
-    env_file:
-      - ./cache.env
+    image: bitnami/redis:7.2
+    environment:
+      - REDIS_AOF_ENABLED=no
+      - REDIS_IO_THREADS=4
+      - REDIS_PASSWORD=nextcloud
     healthcheck:
       test: redis-cli ping || exit 1
     restart: unless-stopped
-    tmpfs:
-      - /data
 
   db:
     build: ./postgres
