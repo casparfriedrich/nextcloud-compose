@@ -104,6 +104,7 @@ services:
     restart: unless-stopped
     volumes:
       - /pool-1/nc-db:/bitnami/postgresql
+      - ./postgresql/conf.d:/opt/bitnami/postgresql/conf/conf.d
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
