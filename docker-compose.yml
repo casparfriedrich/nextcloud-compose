@@ -84,7 +84,7 @@ services:
     restart: unless-stopped
 
   cache:
-    image: bitnami/redis:7.2
+    build: ./redis
     environment:
       - REDIS_AOF_ENABLED=no
       - REDIS_IO_THREADS=4
@@ -94,7 +94,7 @@ services:
     restart: unless-stopped
 
   db:
-    image: bitnami/postgresql:16
+    build: ./postgresql
     environment:
       - POSTGRESQL_DATABASE=nextcloud
       - POSTGRESQL_PASSWORD=nextcloud
@@ -104,7 +104,6 @@ services:
     restart: unless-stopped
     volumes:
       - /pool-0/nc-db:/bitnami/postgresql
-      - ./postgresql/conf.d:/opt/bitnami/postgresql/conf/conf.d
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
