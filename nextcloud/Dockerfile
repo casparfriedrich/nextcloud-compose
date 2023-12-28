@@ -1,5 +1,7 @@
 FROM nextcloud:27.1
 
+RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
 RUN apt-get -y update && \
     apt-get -y install \
         imagemagick \
