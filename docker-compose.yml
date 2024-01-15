@@ -25,9 +25,9 @@ services:
       - "55181:80"
     restart: unless-stopped
     volumes:
-      - /pool-0/nc-app:/var/www/html
-      - /pool-0/nc-config:/var/www/html/config
-      - /pool-0/nc-data:/var/www/html/data
+      - /pool-0/nextcloud/app:/var/www/html
+      - /pool-0/nextcloud/config:/var/www/html/config
+      - /pool-0/nextcloud/data:/var/www/html/data
 
   cron:
     depends_on:
@@ -102,7 +102,7 @@ services:
       test: pg_isready -U nextcloud || exit 1
     restart: unless-stopped
     volumes:
-      - /pool-0/nc-db:/bitnami/postgresql
+      - /pool-0/nextcloud/db:/bitnami/postgresql
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
