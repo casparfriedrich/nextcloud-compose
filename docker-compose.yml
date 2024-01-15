@@ -20,7 +20,7 @@ services:
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false)'
     hostname: app
-    image: nextcloud-app
+    image: weatherwax:5000/nextcloud-app
     ports:
       - "55181:80"
     restart: unless-stopped
@@ -36,7 +36,7 @@ services:
     entrypoint: ["/cron.sh"]
     env_file:
       - ./nextcloud.env
-    image: nextcloud-app
+    image: weatherwax:5000/nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
     volumes_from:
@@ -51,7 +51,7 @@ services:
       - ./nextcloud.env
     environment:
       - NEXTCLOUD_URL=http://app
-    image: nextcloud-app
+    image: weatherwax:5000/nextcloud-app
     ports:
       - "52191:7867"
     restart: unless-stopped
@@ -67,7 +67,7 @@ services:
     entrypoint: ["/previewgenerator.sh"]
     env_file:
       - ./nextcloud.env
-    image: nextcloud-app
+    image: weatherwax:5000/nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
@@ -90,6 +90,7 @@ services:
       - REDIS_PASSWORD=nextcloud
     healthcheck:
       test: redis-cli ping || exit 1
+    image: weatherwax:5000/nextcloud-cache
     restart: unless-stopped
 
   db:
@@ -100,6 +101,7 @@ services:
       - POSTGRESQL_USERNAME=nextcloud
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
+    image: weatherwax:5000/nextcloud-db
     restart: unless-stopped
     volumes:
       - /pool-0/nc-db:/bitnami/postgresql
