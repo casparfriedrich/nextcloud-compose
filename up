@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-docker compose up --build --wait
+docker compose up --wait
