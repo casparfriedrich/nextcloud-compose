@@ -7,6 +7,7 @@ RUN apt-get -y update && \
         imagemagick \
         inotify-tools \
         jq \
+        libbz2-dev \
         libsmbclient-dev \
         neovim \
         smbclient \
