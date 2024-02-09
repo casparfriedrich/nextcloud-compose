@@ -27,6 +27,7 @@ services:
     volumes:
       - /pool-0/nextcloud/app:/var/www/html
       - /pool-0/nextcloud/config:/var/www/html/config
+      - /pool-0/nextcloud/custom_apps:/var/www/html/custom_apps
       - /pool-0/nextcloud/data:/var/www/html/data
 
   cron:
