@@ -86,6 +86,10 @@ services:
 
   postgresql:
     build: ./postgresql
+    environment:
+      - POSTGRESQL_DATABASE=nextcloud
+      - POSTGRESQL_PASSWORD=nextcloud
+      - POSTGRESQL_USERNAME=nextcloud
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
     restart: unless-stopped
