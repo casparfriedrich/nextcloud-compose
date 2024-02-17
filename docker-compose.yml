@@ -4,11 +4,11 @@ services:
   app:
     build: ./nextcloud
     depends_on:
-      cache:
-        condition: service_healthy
-      db:
-        condition: service_healthy
       imaginary:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     environment:
       - PHP_MEMORY_LIMIT=1024M
@@ -73,7 +73,7 @@ services:
       test: curl -sSf http://localhost:9000/health
     restart: unless-stopped
 
-  cache:
+  redis:
     build: ./redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
@@ -84,7 +84,7 @@ services:
       test: redis-cli ping || exit 1
     restart: unless-stopped
 
-  db:
+  postgresql:
     build: ./postgresql
     environment:
       - POSTGRESQL_DATABASE=nextcloud
