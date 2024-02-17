@@ -10,13 +10,9 @@ services:
         condition: service_healthy
       imaginary:
         condition: service_healthy
-    # environment:
-    #   - NEXTCLOUD_ADMIN_USER=admin
-    #   - NEXTCLOUD_ADMIN_PASSWORD=admin
-    #   - NEXTCLOUD_TRUSTED_DOMAINS=app # Append your domain here
-    #   - TRUSTED_PROXIES=172.17.0.0/12 192.168.0.0/16
-    env_file:
-      - ./nextcloud.env
+    environment:
+      - PHP_MEMORY_LIMIT=1024M
+      - PHP_UPLOAD_LIMIT=1024G
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false)'
     hostname: app
@@ -35,8 +31,6 @@ services:
       app:
         condition: service_healthy
     entrypoint: ["/cron.sh"]
-    env_file:
-      - ./nextcloud.env
     image: nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
@@ -48,8 +42,6 @@ services:
       app:
         condition: service_healthy
     entrypoint: ["/notify_push.sh"]
-    env_file:
-      - ./nextcloud.env
     environment:
       - NEXTCLOUD_URL=http://app
     image: nextcloud-app
@@ -66,8 +58,6 @@ services:
       app:
         condition: service_healthy
     entrypoint: ["/previewgenerator.sh"]
-    env_file:
-      - ./nextcloud.env
     image: nextcloud-app
     restart: unless-stopped
     stop_signal: SIGKILL
@@ -86,9 +76,10 @@ services:
   cache:
     build: ./redis
     environment:
+      - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_AOF_ENABLED=no
-      - REDIS_IO_THREADS=4
-      - REDIS_PASSWORD=nextcloud
+      - REDIS_IO_THREADS=8
+      - REDIS_IO_THREADS_DO_READS=yes
     healthcheck:
       test: redis-cli ping || exit 1
     restart: unless-stopped
