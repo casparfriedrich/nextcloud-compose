@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app:
+  nextcloud:
     build: ./nextcloud
     depends_on:
       imaginary:
@@ -16,54 +16,54 @@ services:
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false)'
     hostname: app
-    image: nextcloud-app
+    image: nextcloud
     ports:
       - "55181:80"
     restart: unless-stopped
     volumes:
-      - /pool-0/nextcloud/html:/var/www/html
+      - /pool-0/nextcloud/nextcloud:/var/www/html
       - /pool-0/nextcloud/config:/var/www/html/config
       - /pool-0/nextcloud/custom_apps:/var/www/html/custom_apps
       - /pool-0/nextcloud/data:/var/www/html/data
 
   cron:
     depends_on:
-      app:
+      nextcloud:
         condition: service_healthy
     entrypoint: ["/cron.sh"]
-    image: nextcloud-app
+    image: nextcloud
     restart: unless-stopped
     stop_signal: SIGKILL
     volumes_from:
-      - app
+      - nextcloud
 
   notify_push:
     depends_on:
-      app:
+      nextcloud:
         condition: service_healthy
     entrypoint: ["/notify_push.sh"]
     environment:
-      - NEXTCLOUD_URL=http://app
-    image: nextcloud-app
+      - NEXTCLOUD_URL=http://nextcloud
+    image: nextcloud
     ports:
       - "52191:7867"
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
     volumes_from:
-      - app
+      - nextcloud
 
   previewgenerator:
     depends_on:
-      app:
+      nextcloud:
         condition: service_healthy
     entrypoint: ["/previewgenerator.sh"]
-    image: nextcloud-app
+    image: nextcloud
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
     volumes_from:
-      - app
+      - nextcloud
 
   imaginary:
     build: ./imaginary
