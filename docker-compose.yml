@@ -46,7 +46,7 @@ services:
       - NEXTCLOUD_URL=http://nextcloud
     image: nextcloud
     ports:
-      - "52191:7867"
+      - "7867:7867"
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
