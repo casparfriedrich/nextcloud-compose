@@ -14,7 +14,10 @@ services:
       - PHP_MEMORY_LIMIT=1024M
       - PHP_UPLOAD_LIMIT=1024G
     healthcheck:
-      test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false)'
+      test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
+      start_period: 30s
+      interval: 15s
+      timeout: 5s
     hostname: app
     image: nextcloud
     ports:
@@ -71,6 +74,9 @@ services:
       - MALLOC_ARENA_MAX=2
     healthcheck:
       test: curl -sSf http://localhost:9000/health
+      start_period: 30s
+      interval: 15s
+      timeout: 5s
     restart: unless-stopped
 
   redis:
@@ -82,6 +88,9 @@ services:
       - REDIS_IO_THREADS_DO_READS=yes
     healthcheck:
       test: redis-cli ping || exit 1
+      start_period: 30s
+      interval: 15s
+      timeout: 5s
     restart: unless-stopped
 
   postgresql:
@@ -92,6 +101,9 @@ services:
       - POSTGRESQL_USERNAME=nextcloud
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
+      start_period: 30s
+      interval: 15s
+      timeout: 5s
     restart: unless-stopped
     volumes:
       - /pool-0/nextcloud/db:/bitnami/postgresql
