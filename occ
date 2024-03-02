@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-docker compose exec --user www-data app php occ "$@"
+docker compose exec --user www-data nextcloud php occ "$@"
