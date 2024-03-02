@@ -4,11 +4,11 @@ services:
   nextcloud:
     build: ./nextcloud
     depends_on:
+      cache:
+        condition: service_healthy
+      database:
+        condition: service_healthy
       imaginary:
-        condition: service_healthy
-      postgresql:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     environment:
       - PHP_MEMORY_LIMIT=1024M
@@ -79,7 +79,7 @@ services:
       timeout: 5s
     restart: unless-stopped
 
-  redis:
+  cache:
     build: ./redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
@@ -93,7 +93,7 @@ services:
       timeout: 5s
     restart: unless-stopped
 
-  postgresql:
+  database:
     build: ./postgresql
     environment:
       - POSTGRESQL_DATABASE=nextcloud
