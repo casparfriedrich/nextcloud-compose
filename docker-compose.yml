@@ -106,7 +106,7 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - /pool-0/nextcloud/db:/bitnami/postgresql
+      - /pool-0/nextcloud/database:/bitnami/postgresql
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
