@@ -1,5 +1,5 @@
 services:
-  nextcloud:
+  app:
     build: ./nextcloud
     depends_on:
       cache:
@@ -17,54 +17,54 @@ services:
       interval: 15s
       timeout: 5s
     hostname: app
-    image: nextcloud
+    image: app
     ports:
       - "55181:80"
     restart: unless-stopped
     volumes:
-      - /pool-0/nextcloud/nextcloud:/var/www/html
+      - /pool-0/nextcloud/app:/var/www/html
       - /pool-0/nextcloud/config:/var/www/html/config
       - /pool-0/nextcloud/custom_apps:/var/www/html/custom_apps
       - /pool-0/nextcloud/data:/var/www/html/data
 
   cron:
     depends_on:
-      nextcloud:
+      app:
         condition: service_healthy
     entrypoint: ["/cron.sh"]
-    image: nextcloud
+    image: app
     restart: unless-stopped
     stop_signal: SIGKILL
     volumes_from:
-      - nextcloud
+      - app
 
   notify_push:
     depends_on:
-      nextcloud:
+      app:
         condition: service_healthy
     entrypoint: ["/notify_push.sh"]
     environment:
-      - NEXTCLOUD_URL=http://nextcloud
-    image: nextcloud
+      - NEXTCLOUD_URL=http://app
+    image: app
     ports:
       - "7867:7867"
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
     volumes_from:
-      - nextcloud
+      - app
 
   previewgenerator:
     depends_on:
-      nextcloud:
+      app:
         condition: service_healthy
     entrypoint: ["/previewgenerator.sh"]
-    image: nextcloud
+    image: app
     restart: unless-stopped
     stop_signal: SIGKILL
     user: www-data
     volumes_from:
-      - nextcloud
+      - app
 
   imaginary:
     build: ./imaginary
