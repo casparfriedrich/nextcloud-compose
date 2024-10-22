@@ -31,10 +31,10 @@ RUN { \
 
 RUN { \
         echo 'pm = dynamic'; \
-        echo 'pm.max_children = 64'; \
-        echo 'pm.start_servers = 16'; \
-        echo 'pm.max_spare_servers = 16'; \
-        echo 'pm.min_spare_servers = 8'; \
+        echo 'pm.max_children = 16'; \
+        echo 'pm.start_servers = 4'; \
+        echo 'pm.max_spare_servers = 12'; \
+        echo 'pm.min_spare_servers = 4'; \
     } >> /usr/local/etc/php/conf.d/pm.ini;
 
 COPY *.sh /
