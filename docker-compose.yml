@@ -54,18 +54,6 @@ services:
     volumes_from:
       - app
 
-  previewgenerator:
-    depends_on:
-      app:
-        condition: service_healthy
-    entrypoint: ["/previewgenerator.sh"]
-    image: app
-    restart: unless-stopped
-    stop_signal: SIGKILL
-    user: www-data
-    volumes_from:
-      - app
-
   imaginary:
     build: ./imaginary
     environment:
