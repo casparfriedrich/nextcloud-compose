@@ -19,7 +19,7 @@ services:
     hostname: app
     image: app
     ports:
-      - "55181:80"
+      - "80:80"
     restart: unless-stopped
     volumes:
       - /pool-1/nextcloud/app:/var/www/html
