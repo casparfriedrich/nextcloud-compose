@@ -22,10 +22,10 @@ services:
       - "80:80"
     restart: unless-stopped
     volumes:
-      - /pool-1/nextcloud/app:/var/www/html
-      - /pool-1/nextcloud/config:/var/www/html/config
-      - /pool-1/nextcloud/custom_apps:/var/www/html/custom_apps
-      - /pool-0/nextcloud/data:/var/www/html/data
+      - /srv/nextcloud/app:/var/www/html
+      - /srv/nextcloud/config:/var/www/html/config
+      - /srv/nextcloud/custom_apps:/var/www/html/custom_apps
+      - /srv/nextcloud/data:/var/www/html/data
 
   cron:
     depends_on:
@@ -78,7 +78,7 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - /pool-1/nextcloud/cache:/bitnami/redis
+      - /srv/nextcloud/cache:/bitnami/redis
 
   database:
     build: ./postgresql
@@ -93,7 +93,7 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - /pool-1/nextcloud/database:/bitnami/postgresql
+      - /srv/nextcloud/database:/bitnami/postgresql
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
