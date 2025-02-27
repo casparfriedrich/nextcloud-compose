@@ -23,9 +23,6 @@ services:
     restart: unless-stopped
     volumes:
       - /srv/nextcloud/app:/var/www/html
-      - /srv/nextcloud/config:/var/www/html/config
-      - /srv/nextcloud/custom_apps:/var/www/html/custom_apps
-      - /srv/nextcloud/data:/var/www/html/data
 
   cron:
     depends_on:
