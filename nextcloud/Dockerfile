@@ -23,12 +23,6 @@ RUN docker-php-ext-enable \
         smbclient \
         ;
 
-#RUN { \
-#        echo 'opcache.enable_cli=1'; \
-#        echo 'opcache.jit=function'; \
-#        echo 'opcache.jit_buffer_size=256M'; \
-#    } >> /usr/local/etc/php/conf.d/opcache-recommended.ini;
-
 RUN { \
         echo 'pm = static'; \
         echo 'pm.max_children = 1024'; \
