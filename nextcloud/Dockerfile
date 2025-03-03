@@ -30,11 +30,8 @@ RUN { \
     } >> /usr/local/etc/php/conf.d/opcache-recommended.ini;
 
 RUN { \
-        echo 'pm = dynamic'; \
+        echo 'pm = static'; \
         echo 'pm.max_children = 128'; \
-        echo 'pm.start_servers = 24'; \
-        echo 'pm.max_spare_servers = 96'; \
-        echo 'pm.min_spare_servers = 24'; \
     } >> /usr/local/etc/php/conf.d/pm.ini;
 
 COPY *.sh /
