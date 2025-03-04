@@ -65,6 +65,7 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_AOF_ENABLED=no
+      - REDIS_IO_THREADS=4
     healthcheck:
       test: redis-cli ping || exit 1
       start_period: 30s
