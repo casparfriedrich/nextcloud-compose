@@ -53,8 +53,6 @@ services:
 
   imaginary:
     build: ./imaginary
-    environment:
-      - MALLOC_ARENA_MAX=2
     healthcheck:
       test: curl -sSf http://localhost:9000/health
       start_period: 30s
