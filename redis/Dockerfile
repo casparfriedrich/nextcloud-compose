@@ -1,1 +1,1 @@
-FROM bitnami/redis:7.2
+FROM bitnami/redis:7.4

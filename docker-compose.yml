@@ -66,8 +66,7 @@ services:
     build: ./redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_IO_THREADS=16
-      - REDIS_IO_THREADS_DO_READS=yes
+      - REDIS_AOF_ENABLED=no
     healthcheck:
       test: redis-cli ping || exit 1
       start_period: 30s
