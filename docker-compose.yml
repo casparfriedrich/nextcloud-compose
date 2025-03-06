@@ -22,7 +22,7 @@ services:
       - "8080:80"
     restart: unless-stopped
     volumes:
-      - /srv/nextcloud/app:/var/www/html
+      - app:/var/www/html
 
   cron:
     depends_on:
@@ -88,7 +88,22 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - /srv/nextcloud/database:/bitnami/postgresql
+      - database:/bitnami/postgresql
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
+
+volumes:
+  app:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.201
+      device: :spool/subvol-102-disk-1
+
+  database:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.201
+      device: :spool/subvol-102-disk-0
