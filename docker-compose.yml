@@ -11,6 +11,7 @@ services:
     environment:
       - PHP_MEMORY_LIMIT=1024M
       - PHP_UPLOAD_LIMIT=1024G
+      - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
       start_period: 30s
