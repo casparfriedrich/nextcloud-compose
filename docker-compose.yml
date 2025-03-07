@@ -107,4 +107,4 @@ volumes:
     driver_opts:
       type: nfs4
       o: addr=192.168.178.201
-      device: :spool/subvol-102-disk-0
+      device: :spool/nextcloud/database
