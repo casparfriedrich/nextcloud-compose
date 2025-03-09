@@ -98,13 +98,13 @@ volumes:
   app:
     driver: local
     driver_opts:
-      type: nfs4
-      o: addr=192.168.178.201
+      type: nfs
+      o: addr=192.168.178.201,vers=4.2
       device: :spool/nextcloud/app
 
   database:
     driver: local
     driver_opts:
-      type: nfs4
-      o: addr=192.168.178.201
+      type: nfs
+      o: addr=192.168.178.201,vers=4.2
       device: :spool/nextcloud/database
