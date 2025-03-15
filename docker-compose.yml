@@ -9,9 +9,9 @@ services:
       imaginary:
         condition: service_healthy
     environment:
-      - PHP_MEMORY_LIMIT: 1G
-      - PHP_UPLOAD_LIMIT: 64M
-      - PHP_OPCACHE_MEMORY_CONSUMPTION: 1024
+      - PHP_MEMORY_LIMIT=1G
+      - PHP_UPLOAD_LIMIT=64M
+      - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
       start_period: 30s
