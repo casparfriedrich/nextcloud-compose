@@ -6,8 +6,6 @@ services:
         condition: service_healthy
       database:
         condition: service_healthy
-      imaginary:
-        condition: service_healthy
     environment:
       - PHP_MEMORY_LIMIT=512M
       - PHP_UPLOAD_LIMIT=16G
@@ -47,19 +45,10 @@ services:
   imaginary:
     image: nextcloud/aio-imaginary:latest
     restart: unless-stopped
-    stop_signal: SIGKILL
 
   cache:
     image: nextcloud/aio-redis:latest
-    # environment:
-    #   - ALLOW_EMPTY_PASSWORD=yes
-    #   - REDIS_AOF_ENABLED=no
-    #   - REDIS_IO_THREADS=4
-    # healthcheck:
-    #   test: redis-cli ping || exit 1
     restart: unless-stopped
-    tmpfs:
-      - /bitnami/redis
 
   database:
     build: ./postgresql
