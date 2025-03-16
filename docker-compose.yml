@@ -18,7 +18,6 @@ services:
       interval: 15s
       timeout: 5s
     hostname: app
-    image: app
     ports:
       - "8080:80"
     restart: unless-stopped
@@ -26,21 +25,21 @@ services:
       - app:/var/www/html
 
   cron:
+    build: ./nextcloud
     depends_on:
       app:
         condition: service_healthy
     entrypoint: ["/cron.sh"]
-    image: app
     restart: unless-stopped
     stop_signal: SIGKILL
     volumes_from:
       - app
 
   notify_push:
+    build: ./nextcloud
     entrypoint: ["/var/www/html/custom_apps/notify_push/bin/x86_64/notify_push", "/var/www/html/config/config.php"]
     environment:
       - NEXTCLOUD_URL=http://app
-    image: app
     ports:
       - "7867:7867"
     restart: unless-stopped
