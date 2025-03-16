@@ -52,8 +52,16 @@ services:
     restart: unless-stopped
 
   cache:
-    image: nextcloud/aio-redis:latest
+    image: bitnami/redis:7.4
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_AOF_ENABLED=no
+      - REDIS_IO_THREADS=4
+    healthcheck:
+      test: redis-cli ping || exit 1
     restart: unless-stopped
+    volumes:
+      - cache:/bitnami/redis
 
   database:
     build: ./postgresql
@@ -80,6 +88,9 @@ volumes:
       type: nfs
       o: addr=192.168.178.201,vers=4.2
       device: :spool/nextcloud/app
+
+  cache:
+    driver: local
 
   database:
     driver: local
