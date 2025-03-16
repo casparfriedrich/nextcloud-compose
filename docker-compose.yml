@@ -53,13 +53,9 @@ services:
       - app
 
   imaginary:
-    build: ./imaginary
-    healthcheck:
-      test: curl -sSf http://localhost:9000/health
-      start_period: 30s
-      interval: 15s
-      timeout: 5s
+    image: nextcloud/aio-imaginary:latest
     restart: unless-stopped
+    stop_signal: SIGKILL
 
   cache:
     build: ./redis
