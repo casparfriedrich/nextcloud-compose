@@ -50,6 +50,7 @@ services:
   imaginary:
     image: nextcloud/aio-imaginary:latest
     restart: unless-stopped
+    stop_signal: SIGKILL
 
   cache:
     image: bitnami/redis:7.4
