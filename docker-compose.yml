@@ -10,6 +10,11 @@ services:
       - PHP_MEMORY_LIMIT=512M
       - PHP_UPLOAD_LIMIT=16G
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
+      - POSTGRES_HOST=database
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
+      - REDIS_HOST=cache
     healthcheck:
       test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
       start_period: 30s
