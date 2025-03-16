@@ -37,10 +37,7 @@ services:
       - app
 
   notify_push:
-    depends_on:
-      app:
-        condition: service_healthy
-    entrypoint: ["/notify_push.sh"]
+    entrypoint: ["/var/www/html/custom_apps/notify_push/bin/x86_64/notify_push", "/var/www/html/config/config.php"]
     environment:
       - NEXTCLOUD_URL=http://app
     image: app
@@ -48,7 +45,6 @@ services:
       - "7867:7867"
     restart: unless-stopped
     stop_signal: SIGKILL
-    user: www-data
     volumes_from:
       - app
 

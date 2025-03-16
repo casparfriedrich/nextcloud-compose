@@ -29,5 +29,3 @@ RUN { \
         echo 'pm = static'; \
         echo 'pm.max_children = 128'; \
     } >> /usr/local/etc/php/conf.d/pm.ini;
-
-COPY *.sh /
