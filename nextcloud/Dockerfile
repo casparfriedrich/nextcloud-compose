@@ -23,9 +23,4 @@ RUN docker-php-ext-enable \
         smbclient \
         ;
 
-RUN ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
-
-RUN { \
-        echo 'pm = static'; \
-        echo 'pm.max_children = 256'; \
-    } >> /usr/local/etc/php/conf.d/pm.ini;
+# RUN ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
