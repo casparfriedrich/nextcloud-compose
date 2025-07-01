@@ -83,7 +83,7 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.178.201,vers=4.2
+      o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
       device: :spool2/nextcloud/app
 
   cache:
@@ -93,5 +93,12 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.178.201,vers=4.2
+      o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
       device: :spool2/nextcloud/database
+
+  stuff:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
+      device: :spool2/stuff
