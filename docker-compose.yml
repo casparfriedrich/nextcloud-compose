@@ -26,6 +26,7 @@ services:
     restart: unless-stopped
     volumes:
       - app:/var/www/html
+      - stuff:/stuff
 
   cron:
     build: ./nextcloud
