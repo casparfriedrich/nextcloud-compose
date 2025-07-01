@@ -27,6 +27,7 @@ services:
     volumes:
       - app:/var/www/html
       - stuff:/stuff
+      - stuff2:/stuff2
 
   cron:
     build: ./nextcloud
@@ -103,3 +104,10 @@ volumes:
       type: nfs
       o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
       device: :spool2/stuff
+
+  stuff2:
+    driver: local
+    driver_opts:
+      type: cifs
+      o: username=nextcloud,password=JidyVBQv9KghsNXKoqc6
+      device: //diskstation.fritz.box/Stuff
