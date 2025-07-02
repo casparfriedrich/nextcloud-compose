@@ -109,5 +109,5 @@ volumes:
     driver: local
     driver_opts:
       type: cifs
-      o: username=nextcloud,password=JidyVBQv9KghsNXKoqc6,vers=3.0,nounix
+      o: username=nextcloud,password=JidyVBQv9KghsNXKoqc6,vers=3.0,ro,nounix
       device: //diskstation.fritz.box/Stuff
