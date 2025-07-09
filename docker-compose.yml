@@ -59,8 +59,8 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
     restart: unless-stopped
-    volumes:
-      - cache:/bitnami/redis
+    tmpfs:
+      - /bitnami/redis
 
   database:
     build: ./postgresql
@@ -87,9 +87,6 @@ volumes:
       type: nfs
       o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
       device: :spool/nextcloud/app
-
-  cache:
-    driver: local
 
   database:
     driver: local
