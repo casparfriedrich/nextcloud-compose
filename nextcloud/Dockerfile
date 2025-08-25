@@ -25,4 +25,4 @@ RUN docker-php-ext-enable \
 
 RUN ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
-COPY pm.ini /usr/local/etc/php/conf.d
+COPY pm-static.ini /usr/local/etc/php/conf.d
