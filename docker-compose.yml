@@ -18,6 +18,8 @@ services:
     hostname: app
     ports:
       - "8080:80"
+    runtime: nvidia
+    gpus: all
     restart: unless-stopped
     volumes:
       - html:/var/www/html
