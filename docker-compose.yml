@@ -91,5 +91,5 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.178.112,vers=4.2,nconnect=16
+      o: addr=192.168.178.112,vers=4.2,nconnect=16,noatime,nodiratime,fsc,async
       device: :/mnt/pool-0/stuff
