@@ -23,4 +23,6 @@ RUN docker-php-ext-enable \
         smbclient \
         ;
 
-# RUN ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+RUN ln -sf /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
+COPY pm.ini /usr/local/etc/php/conf.d

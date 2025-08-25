@@ -2,32 +2,26 @@ services:
   app:
     build: ./nextcloud
     depends_on:
-      cache:
+      redis:
         condition: service_healthy
-      database:
+      postgresql:
         condition: service_healthy
     environment:
-      - PHP_MEMORY_LIMIT=512M
+      - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=16G
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
-      - POSTGRES_HOST=database
-      - POSTGRES_USER=nextcloud
-      - POSTGRES_PASSWORD=nextcloud
-      - POSTGRES_DB=nextcloud
-      - REDIS_HOST=cache
-    healthcheck:
-      test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
-      start_period: 30s
-      interval: 15s
-      timeout: 5s
+    #healthcheck:
+    #  test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
+    #  start_period: 30s
+    #  interval: 15s
+    #  timeout: 5s
     hostname: app
     ports:
       - "8080:80"
     restart: unless-stopped
     volumes:
-      - app:/var/www/html
+      - html:/var/www/html
       - stuff:/stuff
-      - stuff2:/stuff2
 
   cron:
     build: ./nextcloud
@@ -51,7 +45,7 @@ services:
     image: nextcloud/aio-imaginary:latest
     restart: unless-stopped
 
-  cache:
+  redis:
     image: bitnami/redis:7.4
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
@@ -62,7 +56,7 @@ services:
     tmpfs:
       - /bitnami/redis
 
-  database:
+  postgresql:
     build: ./postgresql
     environment:
       - POSTGRESQL_DATABASE=nextcloud
@@ -75,36 +69,27 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - database:/bitnami/postgresql
+      - postgresql:/bitnami/postgresql
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
 
 volumes:
-  app:
+  html:
     driver: local
     driver_opts:
-      type: nfs
-      o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
-      device: :spool/nextcloud/app
+      type: xfs
+      device: /dev/disk/by-partuuid/59e25628-7b11-4416-a741-e419ace921e0
 
-  database:
+  postgresql:
     driver: local
     driver_opts:
-      type: nfs
-      o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
-      device: :spool/nextcloud/database
+      type: xfs
+      device: /dev/disk/by-partuuid/6c95fed6-050d-4628-b418-d225cb31b458
 
   stuff:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.178.201,vers=4.2,rsize=1048576,wsize=1048576,noatime,nodiratime,relatime
-      device: :spool2/stuff
-
-  stuff2:
-    driver: local
-    driver_opts:
-      type: cifs
-      o: username=nextcloud,password=JidyVBQv9KghsNXKoqc6,vers=3.0,ro,nounix
-      device: //diskstation.fritz.box/Stuff
+      o: addr=192.168.178.112,vers=4.2,nconnect=16
+      device: :/mnt/pool-0/stuff
