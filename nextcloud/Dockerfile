@@ -4,6 +4,7 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 RUN apt-get -y update && \
     apt-get -y install \
+        ffmpeg \
         imagemagick \
         inotify-tools \
         jq \
