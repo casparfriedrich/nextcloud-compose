@@ -10,6 +10,15 @@ services:
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=16G
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
+      - POSTGRES_HOST=postgresql
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
+      - REDIS_HOST=redis
+      - NEXTCLOUD_ADMIN_USER=admin
+      - NEXTCLOUD_ADMIN_PASSWORD=admin
+      - NEXTCLOUD_TRUSTED_DOMAINS=app
+      - TRUSTED_PROXIES=172.18.0.0/16
     #healthcheck:
     #  test: curl -sSf http://localhost/status.php | jq -e '(.installed==true) and (.maintenance==false) and (.needsDbUpgrade==false)'
     #  start_period: 30s
@@ -79,19 +88,9 @@ services:
 volumes:
   html:
     driver: local
-    driver_opts:
-      type: xfs
-      device: /dev/disk/by-partuuid/59e25628-7b11-4416-a741-e419ace921e0
 
   postgresql:
     driver: local
-    driver_opts:
-      type: xfs
-      device: /dev/disk/by-partuuid/6c95fed6-050d-4628-b418-d225cb31b458
 
   stuff:
     driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.178.112,vers=4.2,nconnect=16,noatime,nodiratime,fsc,async
-      device: :/mnt/pool-0/stuff
