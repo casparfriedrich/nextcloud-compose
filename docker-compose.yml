@@ -81,12 +81,14 @@ volumes:
     driver: local
     driver_opts:
       type: xfs
+      o: discard
       device: /dev/disk/by-partuuid/59e25628-7b11-4416-a741-e419ace921e0
 
   postgresql:
     driver: local
     driver_opts:
       type: xfs
+      o: discard
       device: /dev/disk/by-partuuid/6c95fed6-050d-4628-b418-d225cb31b458
 
   stuff:
