@@ -59,7 +59,7 @@ services:
       - /bitnami/redis
 
   postgres:
-    image: bitnamilegacy/postgresql:16.1.0
+    image: bitnamilegacy/postgresql:16.6.0
     environment:
       - POSTGRESQL_DATABASE=nextcloud
       - POSTGRESQL_PASSWORD=nextcloud
