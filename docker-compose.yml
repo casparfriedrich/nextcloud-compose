@@ -60,10 +60,6 @@ services:
 
   postgres:
     image: bitnamilegacy/postgresql:16.6.0
-    environment:
-      - POSTGRESQL_DATABASE=nextcloud
-      - POSTGRESQL_PASSWORD=nextcloud
-      - POSTGRESQL_USERNAME=nextcloud
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
       start_period: 30s
