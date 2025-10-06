@@ -4,7 +4,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      postgresql:
+      postgres:
         condition: service_healthy
     environment:
       - PHP_MEMORY_LIMIT=1G
@@ -58,7 +58,7 @@ services:
     tmpfs:
       - /bitnami/redis
 
-  postgresql:
+  postgres:
     image: bitnamilegacy/postgresql:16.1.0
     environment:
       - POSTGRESQL_DATABASE=nextcloud
@@ -71,7 +71,7 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - postgresql:/bitnami/postgresql
+      - postgres:/bitnami/postgresql/data
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
@@ -84,12 +84,12 @@ volumes:
       o: discard
       device: /dev/disk/by-partuuid/59e25628-7b11-4416-a741-e419ace921e0
 
-  postgresql:
+  postgres:
     driver: local
     driver_opts:
       type: xfs
       o: discard
-      device: /dev/disk/by-partuuid/6c95fed6-050d-4628-b418-d225cb31b458
+      device: /dev/disk/by-uuid/162a6040-766e-4f72-8170-7c12fcccc9e0
 
   stuff:
     driver: local
