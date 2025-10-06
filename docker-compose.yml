@@ -72,6 +72,7 @@ services:
     restart: unless-stopped
     volumes:
       - postgres:/bitnami/postgresql/data
+      - ./postgres/conf.d:/opt/bitnami/postgresql/conf/conf.d
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
