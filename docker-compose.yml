@@ -48,7 +48,7 @@ services:
     restart: unless-stopped
 
   redis:
-    image: bitnami/redis:7.4
+    image: bitnamilegacy/redis:7.4
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_IO_THREADS=4
@@ -59,7 +59,7 @@ services:
       - /bitnami/redis
 
   postgresql:
-    build: ./postgresql
+    image: bitnamilegacy/postgresql:16.1.0
     environment:
       - POSTGRESQL_DATABASE=nextcloud
       - POSTGRESQL_PASSWORD=nextcloud
