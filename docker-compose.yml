@@ -51,16 +51,19 @@ services:
     image: redis:8.2
     healthcheck:
       test: redis-cli ping || exit 1
+      start_period: 30s
+      interval: 15s
+      timeout: 5s
     restart: unless-stopped
     tmpfs:
       - /data
 
   postgres:
-    image: bitnamilegacy/postgresql:16.6.0
+    image: postgres:17.6
     environment:
-      - POSTGRESQL_DATABASE=nextcloud
-      - POSTGRESQL_PASSWORD=nextcloud
-      - POSTGRESQL_USERNAME=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
     healthcheck:
       test: pg_isready -U nextcloud || exit 1
       start_period: 30s
@@ -68,8 +71,7 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - postgres:/bitnami/postgresql/data
-      - ./postgres/conf.d:/opt/bitnami/postgresql/conf/conf.d
+      - postgres:/var/lib/postgresql/data
     tmpfs:
       - /docker-entrypoint-preinitdb.d
       - /docker-entrypoint-initdb.d
@@ -87,7 +89,7 @@ volumes:
     driver_opts:
       type: xfs
       o: discard
-      device: /dev/disk/by-uuid/162a6040-766e-4f72-8170-7c12fcccc9e0
+      device: /dev/disk/by-uuid/7482e9df-e12c-4e9d-b2bd-169ce4c41ec9
 
   stuff:
     driver: local
