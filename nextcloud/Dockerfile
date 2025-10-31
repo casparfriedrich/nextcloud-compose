@@ -1,4 +1,4 @@
-FROM nextcloud:31.0
+FROM nextcloud:32.0
 
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
