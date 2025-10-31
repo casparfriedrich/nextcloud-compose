@@ -59,7 +59,7 @@ services:
       - /data
 
   postgres:
-    image: postgres:17.6
+    image: postgres:18.0
     environment:
       - POSTGRES_USER=nextcloud
       - POSTGRES_PASSWORD=nextcloud
@@ -71,10 +71,7 @@ services:
       timeout: 5s
     restart: unless-stopped
     volumes:
-      - postgres:/var/lib/postgresql/data
-    tmpfs:
-      - /docker-entrypoint-preinitdb.d
-      - /docker-entrypoint-initdb.d
+      - postgres:/var/lib/postgresql
 
 volumes:
   html:
