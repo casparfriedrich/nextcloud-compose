@@ -47,6 +47,10 @@ services:
     image: nextcloud/aio-imaginary:latest
     restart: unless-stopped
 
+  stirling-pdf:
+    image: ghcr.io/stirling-tools/stirling-pdf:latest
+    restart: unless-stopped
+
   redis:
     image: redis:8.2
     healthcheck:
