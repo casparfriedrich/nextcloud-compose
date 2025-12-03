@@ -40,6 +40,7 @@ services:
     ports:
       - "7867:7867"
     restart: unless-stopped
+    stop_signal: SIGKILL
     volumes_from:
       - app
 
