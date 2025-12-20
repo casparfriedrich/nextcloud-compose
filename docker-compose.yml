@@ -23,7 +23,6 @@ services:
     restart: unless-stopped
     volumes:
       - html:/var/www/html
-      - stuff:/stuff
 
   cron:
     build: ./nextcloud
@@ -97,10 +96,3 @@ volumes:
       type: xfs
       o: discard
       device: /dev/disk/by-uuid/7482e9df-e12c-4e9d-b2bd-169ce4c41ec9
-
-  stuff:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.178.112,vers=4.2,nconnect=16,noatime,nodiratime,fsc,async
-      device: :/mnt/pool-0/stuff
